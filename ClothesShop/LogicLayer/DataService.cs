@@ -36,16 +36,20 @@ namespace LogicLayer
             return repository.GetClothes(id);
         }
 
-
-
-
-/*
-        public void AddandUpdate(Clothes clothes, int amount)
+         public void AddClient(Client client)
         {
+            repository.AddClient(client);
+        }
 
-            AddClothes(clothes);
-            UpdateClothesStateInfo(clothes.Id, amount);
-        }*/
+          public Client GetClientById(string id)
+        {
+           return repository.GetClient(id);
+        }
+
+
+
+
+
 
     }
 }
