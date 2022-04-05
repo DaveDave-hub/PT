@@ -13,6 +13,11 @@ namespace DataLayer
 
         void DeleteClothes(int id);
 
+ //       Clothes GetClothes(int id);
+
+        Clothes GetClothesByType(ClothesType type);
+        int GetClothesNumber();
+
 
     }
 }

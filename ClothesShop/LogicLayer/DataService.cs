@@ -27,6 +27,25 @@ namespace LogicLayer
             repository.DeleteClothes(id);
         }
 
+        public Clothes GetClothesByType(DataLayer.ClothesType type)
+        {
+            return repository.GetClothesByType(type);
+        }
+        public Clothes GetClothesById(int id)
+        {
+            return repository.GetClothes(id);
+        }
+
+
+
+
+/*
+        public void AddandUpdate(Clothes clothes, int amount)
+        {
+
+            AddClothes(clothes);
+            UpdateClothesStateInfo(clothes.Id, amount);
+        }*/
 
     }
 }
