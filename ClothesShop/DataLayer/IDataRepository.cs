@@ -13,8 +13,6 @@ namespace DataLayer
 
         void DeleteClothes(int id);
 
- //       Clothes GetClothes(int id);
-
         Clothes GetClothesByType(ClothesType type);
         int GetClothesNumber();
 
@@ -22,7 +20,7 @@ namespace DataLayer
 
         Client GetClient(String id);
 
-  //      IEnumerable<Client> GetAllClients();
+        IEnumerable<Client> GetAllClients();
 
         int GetAllClientsNumber();
 

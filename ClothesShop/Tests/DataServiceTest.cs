@@ -23,7 +23,7 @@ namespace Tests
 
 		}
 
-		[TestMethod]
+        [TestMethod]
 		public void AddAndGetClient()
 		{
 			Client c = new Client("Ula", "Brzydula", "6");
