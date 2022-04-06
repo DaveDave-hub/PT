@@ -24,6 +24,10 @@ namespace DataLayer
 
         int GetAllClientsNumber();
 
+        void UpdateClientsInfo(Client C);
+
+        void DeleteClient(String id);
+
 
     }
 }

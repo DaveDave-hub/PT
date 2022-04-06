@@ -12,6 +12,14 @@ namespace Tests
     {
 
 		private DataService service;
+		private DataContext our_shop;
+
+		[TestInitialize]
+		public void Initialize()
+		{
+			our_shop = new DataContext();
+			service = new DataService(new DataRepository(our_shop));
+		}
 
 		[TestMethod]
 		public void ClothesTest()
@@ -27,9 +35,9 @@ namespace Tests
 		public void AddAndGetClient()
 		{
 			Client c = new Client("Ula", "Brzydula", "6");
-			Assert.AreEqual(service.GetAllClientsNumber(), 0);
+			Assert.AreEqual(service.GetAllClientsNumber(), 4);
 			service.AddClient(c);
-			Assert.AreEqual(service.GetAllClientsNumber(), 1);
+			Assert.AreEqual(service.GetAllClientsNumber(), 5);
 			Client temp = service.GetClientById("6");
 			Assert.AreEqual(temp, c);
 		}
