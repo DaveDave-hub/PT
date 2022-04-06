@@ -18,6 +18,14 @@ namespace DataLayer
         Clothes GetClothesByType(ClothesType type);
         int GetClothesNumber();
 
+        void AddClient(Client c);
+
+        Client GetClient(String id);
+
+  //      IEnumerable<Client> GetAllClients();
+
+        int GetAllClientsNumber();
+
 
     }
 }

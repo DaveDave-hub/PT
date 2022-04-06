@@ -46,6 +46,12 @@ namespace LogicLayer
            return repository.GetClient(id);
         }
 
+        public int GetAllClientsNumber()
+        {
+            return repository.GetAllClientsNumber();
+
+        }
+
 
 
 
