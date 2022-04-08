@@ -18,6 +18,10 @@ namespace DataLayer.DataGeneration
             Client c4 = new Client("Bartek", "Stasiak", "4");
             data.clients.Add(c3);
 
+
+            Clothes cl1 = new Clothes(1, 70, ClothesType.hoodie);
+            data.catalog.products.Add(1, cl1);
+
         }
 
 

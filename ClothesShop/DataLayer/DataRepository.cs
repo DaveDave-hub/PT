@@ -68,7 +68,7 @@ namespace DataLayer
             }
             throw new Exception("Client with such ID does not exist");
         }
-
+/*
         public void AddClothes(Clothes d)
         {
             throw new NotImplementedException();
@@ -93,7 +93,72 @@ namespace DataLayer
         {
             throw new NotImplementedException();
         }
+*/
+        #endregion
+
+
+        #region Catalog
+
+        public void AddClothes(Clothes d)
+
+        {
+            if (context.catalog.products.ContainsKey(d.Id))
+            {
+                throw new Exception("No such clothes in our shop");
+            }
+            context.catalog.products.Add(d.Id, d);
+        }
+
+        public int GetClothesNumber()
+        {
+            return context.catalog.products.Count();
+
+        }
+
+        public Clothes GetClothes(int id)
+        {
+            return context.catalog.products[id];
+        }
+
+        public Clothes GetClothesByType(ClothesType type)
+        {
+            foreach (var clothes in context.catalog.products.ToArray())
+            {
+                if (context.catalog.products[clothes.Key].Type == type)
+                {
+                    return context.catalog.products[clothes.Key];
+                }
+            }
+            throw new Exception("There is no clothes of this type");
+        }
+
+        public IEnumerable<Clothes> GetAllClothes()
+        {
+            return context.catalog.products.Values;
+        }
+
+        public void UpdateClothesInfo(Clothes D)
+        {
+            if (context.catalog.products.ContainsKey(D.Id))
+            {
+                context.catalog.products[D.Id].Price = D.Price;
+                context.catalog.products[D.Id].Type = D.Type;
+                return;
+            }
+            throw new Exception("No such clothes in our shop");
+        }
+
+        public void DeleteClothes(int id)
+        {
+            if (context.catalog.products.ContainsKey(id))
+            {
+                context.catalog.products.Remove(id);
+                return;
+            }
+            throw new Exception("There is no such clothes already");
+        }
 
         #endregion
+
     }
 }
