@@ -8,7 +8,7 @@ namespace DataLayer
     public interface IGenerator
     {
 
-        void GenarateData(DataContext data);
+        void GenerateData(DataContext data);
 
     }
 }

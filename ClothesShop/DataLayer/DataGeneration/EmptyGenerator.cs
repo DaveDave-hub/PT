@@ -9,7 +9,7 @@ namespace DataLayer.DataGeneration
     {
 
 
-        public void GenarateData(DataContext data)
+        public void GenerateData(DataContext data)
         {
 
         }

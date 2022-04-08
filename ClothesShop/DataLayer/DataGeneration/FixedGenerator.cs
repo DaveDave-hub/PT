@@ -7,7 +7,7 @@ namespace DataLayer.DataGeneration
     public class FixedGenerator : IGenerator
     {
 
-        public void GenarateData(DataContext data)
+        public void GenerateData(DataContext data)
         {
             Client c1 = new Client("Artur", "Rojek", "1");
             data.clients.Add(c1);
@@ -19,5 +19,8 @@ namespace DataLayer.DataGeneration
             data.clients.Add(c3);
 
         }
+
+
+
     }
 }
