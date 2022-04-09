@@ -8,6 +8,8 @@ namespace DataLayer
 
     {
         public Catalog catalog = new Catalog();
+        public List<Event> events = new List<Event>();
+        public State shop = new State();
         public List<Client> clients = new List<Client>();
 
     }

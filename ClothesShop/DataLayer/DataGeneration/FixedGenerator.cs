@@ -9,13 +9,13 @@ namespace DataLayer.DataGeneration
 
         public void GenerateData(DataContext data)
         {
-            Client c1 = new Client("Artur", "Rojek", "1");
+            Client c1 = new Client("James", "Bond", "1");
             data.clients.Add(c1);
-            Client c2 = new Client("John", "Rambo", "2");
+            Client c2 = new Client("Hermione", "Granger", "2");
             data.clients.Add(c2);
-            Client c3 = new Client("Robert", "Kubica", "3");
+            Client c3 = new Client("Kamil", "Stoch", "3");
             data.clients.Add(c3);
-            Client c4 = new Client("Bartek", "Stasiak", "4");
+            Client c4 = new Client("Agnieszka", "Osiecka", "4");
             data.clients.Add(c3);
 
 

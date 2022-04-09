@@ -160,5 +160,90 @@ namespace DataLayer
 
         #endregion
 
+        #region Event
+
+        public List<Event> GetAllEvents()
+        {
+            return context.events;
+        }
+
+        public int GetAllEventsNumber()
+        {
+            return context.events.Count;
+        }
+
+        public Event GetEventById(String id)
+        {
+            for (int i = 0; i < context.events.Count; i++)
+            {
+                if (context.events[i].Id == id)
+                {
+                    return context.events[i];
+                }
+            }
+            throw new Exception("Event with such id does not exist");
+        }
+
+
+        public void AddEvent(Event e)
+        {
+            context.events.Add(e);
+        }
+
+        public void DeleteEvent(String id)
+        {
+            for (int i = 0; i < context.events.Count; i++)
+            {
+                if (context.events[i].Id == id)
+                {
+                    context.events.Remove(context.events[i]);
+                    return;
+                }
+            }
+            throw new Exception("Event with such id does not exist");
+        }
+
+        #endregion
+
+        #region State
+
+        public int GetClothesState(int id)
+        {
+            return context.shop.inventory[id];
+        }
+
+        public State GetState()
+        {
+            return context.shop;
+        }
+
+        public Dictionary<int, int> GetAllStates()
+        {
+            return context.shop.inventory;
+        }
+
+        public void UpdateClothesStateInfo(int ID, int new_state)
+        {
+            if (context.catalog.products.ContainsKey(ID))
+            {
+
+                context.shop.inventory[ID] = new_state;
+                return;
+            }
+            throw new Exception("No Clothes with such ID");
+        }
+
+        public void DeleteOneClothesState(int id)
+        {
+            if (context.shop.inventory.ContainsKey(id))
+            {
+                context.shop.inventory.Remove(id);
+                return;
+            }
+            throw new Exception("There is no such clothes already");
+        }
+
+        #endregion
+
     }
 }
