@@ -21,10 +21,18 @@ namespace DataLayer.DataGeneration
 
             Clothes cl1 = new Clothes(1, 70, ClothesType.hoodie);
             data.catalog.products.Add(1, cl1);
+            Clothes cl2 = new Clothes(2, 45, ClothesType.tshirt);
+            data.catalog.products.Add(2, cl2);
+
+            data.shop.catalog = data.catalog;
+
+            for(int i = 1; i <= data.catalog.products.Count; i++)
+            {
+                data.shop.inventory.Add(data.catalog.products[i].Id, 10);
+            }
+
+
 
         }
-
-
-
     }
 }

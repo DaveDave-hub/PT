@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace TestingData
 {
     [TestClass]
-    public class FixedGenerationTest
+    public class RandomTest
 
     {
 
@@ -20,15 +20,15 @@ namespace TestingData
         {
             our_shop = new DataContext();
             repository = new DataRepository(our_shop);
-            generator = new FixedGenerator();
+            generator = new RandomGenerator();
             generator.GenerateData(our_shop);
         }
 
         [TestMethod]
         public void NotNull()
         {
-            Assert.IsNotNull(repository.GetAllClients());
             Assert.IsNotNull(repository.GetAllClothes());
+            Assert.IsNotNull(repository.GetAllClients());
             Assert.IsNotNull(repository.GetAllEvents());
 
         }
@@ -36,9 +36,9 @@ namespace TestingData
         [TestMethod]
         public void Checkquantity()
         {
-            Assert.AreEqual(repository.GetAllClientsNumber(), 4);
-            Assert.AreEqual(repository.GetClothesNumber(), 2);
+            Assert.AreEqual(repository.GetClothesNumber(), 9);
+            Assert.AreEqual(repository.GetAllClientsNumber(), 9);
+            Assert.AreEqual(repository.GetAllEventsNumber(), 0);
         }
     }
 }
-

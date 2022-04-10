@@ -68,34 +68,7 @@ namespace DataLayer
             }
             throw new Exception("Client with such ID does not exist");
         }
-/*
-        public void AddClothes(Clothes d)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Clothes GetClothes(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteClothes(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Clothes GetClothesByType(ClothesType type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetClothesNumber()
-        {
-            throw new NotImplementedException();
-        }
-*/
         #endregion
-
 
         #region Catalog
 
