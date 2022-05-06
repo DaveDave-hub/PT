@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DataLayer;
 
 
-namespace DataLayer.DataGeneration
+namespace Tests.DataGeneration
 {
     public class EmptyGenerator : IGenerator
     {

@@ -3,21 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataLayer.API;
 
 namespace DataLayer
 {
-    public class Client
+    internal class Client : IClient
     {
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public string Id { get; set; }
+        private String FIRSTNAME;
+        private String LASTNAME;
+        private int ID;
 
-        public Client(String FirstName, String LastName, String Id)
+        public Client(String name, String surname, int id)
         {
-            this.FirstName = FirstName;
-            this.LastName = LastName;
-            this.Id = Id;
+            FIRSTNAME = name;
+            LASTNAME = surname;
+            ID = id;
+        }
 
+        public string FirstName
+        {
+            get { return FIRSTNAME; }
+            set { FIRSTNAME = value; }
+        }
+
+        public String LastName
+        {
+            get { return LASTNAME; }
+            set { LASTNAME = value; }
+        }
+
+        public int Id
+        {
+            get { return ID; } 
+            set { ID = value; }
         }
 
         public override bool Equals(object obj)

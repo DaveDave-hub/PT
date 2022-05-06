@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataLayer;
 
-namespace DataLayer.DataGeneration
+namespace Tests.DataGeneration
 {
     public class RandomGenerator : IGenerator
     {

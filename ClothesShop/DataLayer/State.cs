@@ -1,18 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DataLayer.API;
+
+
 
 namespace DataLayer
 {
 
-    public class State
 
+
+    internal class State : IState
     {
-        public Dictionary<int, int> inventory { get; set; } = new Dictionary<int, int>();
-
-        public Catalog catalog { get; set; } = new Catalog();
-
+        private Dictionary<int, int> Inventory;
+        private ICatalog Catalog;
 
 
+
+        public State(Dictionary<int, int> _inventory, ICatalog _catalog)
+        {
+            Inventory = _inventory;
+            Catalog = _catalog;
+        }
+
+        public Dictionary<int, int> inventory 
+        {
+
+            get { return Inventory; }
+            set { Inventory = value; }
+        }
+
+        public ICatalog catalog
+        {
+            get { return Catalog; }
+            set { Catalog = value; }
+        }
     }
 }

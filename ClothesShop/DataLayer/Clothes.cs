@@ -1,22 +1,38 @@
-﻿using DataLayer;
-using System;
+﻿using System;
+using DataLayer.API;
 
 namespace DataLayer
 {
-    public class Clothes
+    internal class Clothes :IClothes
     {
+        private int ID;
+        private double PRICE;
+        private ClothesType CLOTHESTYPE;
 
-        public Clothes(int Id, double Price, ClothesType Type)
+
+        public Clothes(int _Id, double _Price, ClothesType _ClothesType)
         {
-            this.Id = Id;
-            this.Price = Price;
-            this.Type = Type;
-
+            ID = _Id;
+            PRICE = _Price;
+            CLOTHESTYPE = _ClothesType;
         }
 
-        public int Id { get; set; }
-        public double Price { get; set; }
+        public int Id
+        {
+            get { return ID; }
+            set { ID = value; }
+        }
 
-        public ClothesType Type { get; set; }
-    }
+        public double Price
+        { 
+            get { return PRICE; }
+            set { PRICE = value;} 
+        }
+
+        public ClothesType ClothesType
+        { 
+            get { return CLOTHESTYPE; }
+            set { CLOTHESTYPE = value; } 
+        }
+        }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using DataLayer;
-using DataLayer.DataGeneration;
+using Tests;
+using Tests.DataGeneration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TestingData

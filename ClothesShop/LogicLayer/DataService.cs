@@ -1,119 +1,120 @@
-﻿using DataLayer;
+﻿using DataLayer.API;
+using DataLayer;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 
 
-namespace LogicLayer
+namespace LogicLayer.API
 {
 
-    public class DataService
+    public abstract class DataServiceAPI
     {
-        private IDataRepository repository;
+        private DataLayerAPI repository;
 
-        public DataService(IDataRepository repository)
+        public DataServiceAPI(DataLayerAPI repository)
         {
             this.repository = repository;
         }
 
-        public Clothes GetClothesByType(DataLayer.ClothesType type)
+        public abstract Clothes GetClothesByType(DataLayer.ClothesType type)
         {
             return repository.GetClothesByType(type);
         }
-        public Clothes GetClothesById(int id)
+        public abstract Clothes GetClothesById(int id)
         {
             return repository.GetClothes(id);
         }
-        public int GetNumberOfClothes()
+        public abstract int GetNumberOfClothes()
         {
             return repository.GetClothesNumber();
         }
 
-        public int GetAllClientsNumber()
+        public abstract int GetAllClientsNumber()
         {
             return repository.GetAllClientsNumber();
 
         }
 
-        public int GetStateOfClothes(int id)
+        public abstract int GetStateOfClothes(int id)
         {
             return repository.GetClothesState(id);
         }
 
-        public void AddClothes(Clothes clothes)
+        public abstract void AddClothes(Clothes clothes)
         {
             repository.AddClothes(clothes);
         }
 
-        public void DeleteClothes(int id)
+        public abstract void DeleteClothes(int id)
         {
             repository.DeleteClothes(id);
         }
 
-        public Client GetClientById(string id)
+        public abstract Client GetClientById(string id)
         {
             return repository.GetClient(id);
         }
-        public void AddClient(Client client)
+        public abstract void AddClient(Client client)
         {
             repository.AddClient(client);
         }
 
-        public void UpdateClientInfo(String first_name, String last_name, String Id)
+        public abstract void UpdateClientInfo(String first_name, String last_name, String Id)
         {
             Client C = new Client(first_name, last_name, Id);
             repository.UpdateClientsInfo(C);
         }
 
-        public void DeleteClient(String id)
+        public abstract void DeleteClient(String id)
         {
             repository.DeleteClient(id);
         }
 
-        public int GetClientNumber()
+        public abstract int GetClientNumber()
         {
             return repository.GetAllClientsNumber();
         }
 
 
-        public State GetState()
+        public abstract State GetState()
         {
             return repository.GetState();
         }
 
-        public void UpdateClothesStateInfo(int ID, int new_state)
+        public abstract void UpdateClothesStateInfo(int ID, int new_state)
         {
             repository.UpdateClothesStateInfo(ID, new_state);
         }
 
-        public void DeleteOneClothesState(int id)
+        public abstract void DeleteOneClothesState(int id)
         {
             repository.DeleteOneClothesState(id);
 
         }
 
-        public void AddEvent(Event e)
+        public abstract void AddEvent(Event e)
         {
             repository.AddEvent(e);
         }
 
-        public int GetAllEventsNumber()
+        public abstract int GetAllEventsNumber()
         {
             return repository.GetAllEventsNumber();
         }
 
 
-        public void DeleteEvent(string id)
+        public abstract void DeleteEvent(string id)
         {
             repository.DeleteEvent(id);
         }
-        public void GetEventByID(string id)
+        public abstract void GetEventByID(string id)
         {
             repository.GetEventById(id);
         }
 
-        public IEnumerable<Event> GetEventsForTheClient(string id)
+        public abstract IEnumerable<Event> GetEventsForTheClient(string id)
         {
             Client client = repository.GetClient(id);
             List<Event> allEvents = new List<Event>();
@@ -128,7 +129,7 @@ namespace LogicLayer
             return allEvents;
         }
 
-        public void BuyClothes(string customerId, int clothesId, DateTime dayOfBuying, int amount)
+        public abstract void BuyClothes(string customerId, int clothesId, DateTime dayOfBuying, int amount)
         {
             Client client = repository.GetClient(customerId);
             Clothes clothes = repository.GetClothes(clothesId);
@@ -144,7 +145,7 @@ namespace LogicLayer
 
         }
 
-        public void NewBatch(string supplierId, int clothesId, DateTime dayOfRestock, int amountProvided)
+        public abstract void NewBatch(string supplierId, int clothesId, DateTime dayOfRestock, int amountProvided)
         {
             Client supplier = repository.GetClient(supplierId);
             int newAmount = amountProvided + GetStateOfClothes(clothesId);
@@ -155,7 +156,7 @@ namespace LogicLayer
 
         }
 
-        public void AddandUpdate(Clothes clothes, int amount)
+        public abstract void AddandUpdate(Clothes clothes, int amount)
         {
 
             AddClothes(clothes);

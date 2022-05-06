@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DataLayer
+namespace DataLayer.API
 {
-    public class DataRepository : IDataRepository
+    public class DataRepository : DataLayerAPI
     {
         private DataContext context;
 

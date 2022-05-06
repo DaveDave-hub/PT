@@ -1,12 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace DataLayer
+
+namespace DataLayer.API
 {
-    public class Catalog
-
+    internal class Catalog : ICatalog
     {
-        public Dictionary<int, Clothes> products { get; set; } = new Dictionary<int, Clothes>();
+        private Dictionary<int, IClothes> Products;
+
+
+
+
+        public Catalog(Dictionary<int, IClothes> PRODUCTS)
+        {
+            Products = PRODUCTS;
+        }
+
+
+
+        public Dictionary<int, IClothes> products
+        {
+            get { return Products; }
+            set { Products = value; }
+        }
+
     }
 }

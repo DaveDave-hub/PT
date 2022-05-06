@@ -1,6 +1,7 @@
 ﻿using System;
-using DataLayer;
-using DataLayer.DataGeneration;
+using DataLayer.API;
+using Tests;
+using Tests.DataGeneration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TestingData
@@ -9,7 +10,7 @@ namespace TestingData
     public class EmptyGenerationTests
     {
         private DataContext our_shop;
-        private IDataRepository repository;
+        private DataLayerAPI repository;
         private IGenerator generator;
 
 

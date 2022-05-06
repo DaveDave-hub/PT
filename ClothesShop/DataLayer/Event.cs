@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataLayer
+namespace DataLayer.API
 {
-    public abstract class Event
+    public interface IEvent
     {
-        public String Id { get; set; }
+        public int Id { get; }
         public DateTime dateTime { get; }
-        public State state { get; set; }
-        public Client client { get; set; }
+        public IState state { get; }
+        public IClient client { get; }
 
-        public Event(string id, State state, Client client, DateTime dateTime)
+        /*
+        internal Event(string id, State state, Client client, DateTime dateTime)
         {
             this.Id = id;
             this.state = state;
@@ -20,11 +21,12 @@ namespace DataLayer
 
         }
 
-        public override bool Equals(object obj)
+        internal override bool Equals(object obj)
         {
             var @event = obj as Event;
             return @event != null &&
                    Id == @event.Id;
         }
+        */
     }
 }
