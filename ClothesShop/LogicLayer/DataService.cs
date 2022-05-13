@@ -39,7 +39,7 @@ namespace LogicLayer.API
 
         public abstract int GetStateOfClothes(int id)
         {
-            return repository.GetClothesState(id);
+            return repository.GetClothesState(id, 2);
         }
 
         public abstract void AddClothes(Clothes clothes)

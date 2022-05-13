@@ -1,6 +1,6 @@
 ﻿namespace DataLayer
 {
-    public enum ClothesType
+    internal enum ClothesType
     {
         trousers,
         tshirt,

@@ -8,7 +8,10 @@ namespace DataLayer.API
         private Dictionary<int, IClothes> Products;
 
 
+        public Catalog()
+        {
 
+        }
 
         public Catalog(Dictionary<int, IClothes> PRODUCTS)
         {

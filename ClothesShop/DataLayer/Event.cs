@@ -7,12 +7,19 @@ namespace DataLayer.API
     public interface IEvent
     {
         public int Id { get; }
-        public DateTime dateTime { get; }
-        public IState state { get; }
-        public IClient client { get; }
+        public DateTime dateTime { get; set; }
+        public IState state { get; set; }
+        public IClient client { get; set; }
+    }
 
-        /*
-        internal Event(string id, State state, Client client, DateTime dateTime)
+    internal class Event : IEvent
+    {
+        public int Id { get; }
+        public DateTime dateTime { get; set; }
+        public IState state { get; set; }
+        public IClient client { get; set; }
+
+        Event(int id, State state, Client client, DateTime dateTime)
         {
             this.Id = id;
             this.state = state;
@@ -20,13 +27,5 @@ namespace DataLayer.API
             this.dateTime = dateTime;
 
         }
-
-        internal override bool Equals(object obj)
-        {
-            var @event = obj as Event;
-            return @event != null &&
-                   Id == @event.Id;
-        }
-        */
     }
 }

@@ -14,20 +14,19 @@ namespace DataLayer
 
         public NewBatchEvent(int ID, State STATE, Client CLIENT, DateTime DATETIME)
         {
-            this.id = ID;  
-            this.Time = DATETIME;
-            this.State = STATE;
-            this.Client = CLIENT;
+            id = ID;  
+            Time = DATETIME;
+            State = STATE;
+            Client = CLIENT;
         }
 
-        public int Id { get { return this.Id; } }
-        public DateTime dateTime { get { return this.Time;} }
 
-        public IState state { get { return this.state;} }
+        public int Id { get; }
+        public DateTime dateTime { get; set; }
+        public DateTime DateTime { get; set; }
+        public IState state { get; set; }
+        public IClient client { get; set; }
 
-        public IClient client { get { return this.client;} }
-
-
-
+        
     }
 }

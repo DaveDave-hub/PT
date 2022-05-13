@@ -5,9 +5,9 @@ using System.Text;
 
 namespace DataLayer.API
 {
-    public class DataRepository : DataLayerAPI
+    internal class DataRepository : DataLayerAPI
     {
-        private DataContext context;
+        private readonly DataContext context;
 
         public DataRepository(DataContext context)
         {
@@ -16,34 +16,45 @@ namespace DataLayer.API
 
 
         #region Client
-        public void AddClient(Client c)
+        public override void AddClient(String firstName, String lastName, int id)
         {
+            Client c = new Client(firstName, lastName, id);
+
             context.clients.Add(c);
         }
 
-        public Client GetClient(String id)
+        public override String GetClientFirstName(int id)
         {
             foreach (Client C in context.clients)
             {
                 if (C.Id == id)
                 {
-                    return C;
+                    return C.FirstName;
                 }
             }
             throw new Exception("There is no client with this ID");
         }
 
-        public IEnumerable<Client> GetAllClients()
+        public override String GetClientLastName(int id)
         {
-            return context.clients;
+            foreach (Client C in context.clients)
+            {
+                if (C.Id == id)
+                {
+                    return C.LastName;
+                }
+            }
+            throw new Exception("There is no client with this ID");
         }
 
-        public int GetAllClientsNumber()
+        public override int GetAllClientsNumber()
         {
             return context.clients.Count;
         }
-        public void UpdateClientsInfo(Client C)
+        public override void UpdateClientsInfo(String firstName, String lastName, int id)
         {
+            Client C = new Client(firstName, lastName, id);
+
             for (int i = 0; i < context.clients.Count; i++)
             {
                 if (context.clients[i].Id == C.Id)
@@ -56,7 +67,7 @@ namespace DataLayer.API
             throw new Exception("Client with such ID does not exist");
         }
 
-        public void DeleteClient(String id)
+        public override void DeleteClient(int id)
         {
             for (int i = 0; i < context.clients.Count; i++)
             {
@@ -72,9 +83,30 @@ namespace DataLayer.API
 
         #region Catalog
 
-        public void AddClothes(Clothes d)
-
+        public override void AddClothes(int id, double price, String type)
         {
+            ClothesType clothesType = new ClothesType();
+            switch (type)
+            {
+                case "trousers":
+                    clothesType = ClothesType.trousers;
+                    break;
+                case "tshirt":
+                    clothesType = ClothesType.tshirt;
+                    break;
+                case "hoodie":
+                    clothesType = ClothesType.hoodie;
+                    break;
+                case "sneakers":
+                    clothesType = ClothesType.sneakers;
+                    break;
+                case "dress":
+                    clothesType = ClothesType.dress;
+                    break;
+            }
+
+            Clothes d = new Clothes(id, price, clothesType);
+
             if (context.catalog.products.ContainsKey(d.Id))
             {
                 throw new Exception("No such clothes in our shop");
@@ -82,46 +114,61 @@ namespace DataLayer.API
             context.catalog.products.Add(d.Id, d);
         }
 
-        public int GetClothesNumber()
+        public override int GetClothesNumber()
         {
             return context.catalog.products.Count();
 
         }
 
-        public Clothes GetClothes(int id)
+        public override String GetClothes(int id)
         {
-            return context.catalog.products[id];
-        }
-
-        public Clothes GetClothesByType(ClothesType type)
-        {
-            foreach (var clothes in context.catalog.products.ToArray())
+            foreach(var clothes in context.catalog.products)
             {
-                if (context.catalog.products[clothes.Key].Type == type)
+                if (clothes.Value.Id == id)
                 {
-                    return context.catalog.products[clothes.Key];
+                    return clothes.Value.ClothesType.ToString();
                 }
             }
-            throw new Exception("There is no clothes of this type");
+            throw new Exception("No such clothes in our shop");
         }
 
-        public IEnumerable<Clothes> GetAllClothes()
-        {
-            return context.catalog.products.Values;
-        }
 
-        public void UpdateClothesInfo(Clothes D)
+
+
+        public override void UpdateClothesInfo(int id, double price, String type)
         {
+            ClothesType clothesType = new ClothesType();
+            switch (type)
+            {
+                case "trousers":
+                    clothesType = ClothesType.trousers;
+                    break;
+                case "tshirt":
+                    clothesType = ClothesType.tshirt;
+                    break;
+                case "hoodie":
+                    clothesType = ClothesType.hoodie;
+                    break;
+                case "sneakers":
+                    clothesType = ClothesType.sneakers;
+                    break;
+                case "dress":
+                    clothesType = ClothesType.dress;
+                    break;
+            }
+
+            Clothes D = new Clothes(id, price, clothesType);
+
             if (context.catalog.products.ContainsKey(D.Id))
             {
                 context.catalog.products[D.Id].Price = D.Price;
-                context.catalog.products[D.Id].Type = D.Type;
+                context.catalog.products[D.Id].ClothesType = D.ClothesType;
                 return;
             }
             throw new Exception("No such clothes in our shop");
         }
 
-        public void DeleteClothes(int id)
+        public override void DeleteClothes(int id)
         {
             if (context.catalog.products.ContainsKey(id))
             {
@@ -135,35 +182,77 @@ namespace DataLayer.API
 
         #region Event
 
-        public List<Event> GetAllEvents()
-        {
-            return context.events;
-        }
-
-        public int GetAllEventsNumber()
+        public override int GetAllEventsNumber()
         {
             return context.events.Count;
         }
 
-        public Event GetEventById(String id)
+        public override int GetEventClientId(int id)
         {
             for (int i = 0; i < context.events.Count; i++)
             {
                 if (context.events[i].Id == id)
                 {
-                    return context.events[i];
+                    return context.events[i].client.Id;
+                }
+            }
+            throw new Exception("Event with such id does not exist");
+        }
+
+        public override int GetEventStateId(int id)
+        {
+            for (int i = 0; i < context.events.Count; i++)
+            {
+                if (context.events[i].Id == id)
+                {
+                    return context.events[i].state.stateId;
+                }
+            }
+            throw new Exception("Event with such id does not exist");
+        }
+
+        public override DateTime GetEventTime(int id)
+        {
+            for (int i = 0; i < context.events.Count; i++)
+            {
+                if (context.events[i].Id == id)
+                {
+                    return context.events[i].dateTime;
                 }
             }
             throw new Exception("Event with such id does not exist");
         }
 
 
-        public void AddEvent(Event e)
+        public override void AddNewBatchEvent(int id, int stateId, int clientId, DateTime dateTime)
         {
+            State state1 = null;
+            foreach (State state in context.shop)
+            {
+                if(state.stateId == stateId)
+                {
+                    state1 = state;
+                }
+            }
+
+            Client client1 = null;
+            foreach (Client client in context.clients)
+            {
+                if (client.clientId == clientId)
+                {
+                    client1 = client;
+                }
+            }
+
+            if (state1 == null) throw new Exception("State with such stateid does not exist");
+            if (client1 == null) throw new Exception("Client with such clientid does not exist");
+
+            IEvent e = new NewBatchEvent(id, state1, client1, dateTime);
+
             context.events.Add(e);
         }
 
-        public void DeleteEvent(String id)
+        public override void DeleteEvent(int id)
         {
             for (int i = 0; i < context.events.Count; i++)
             {
@@ -176,45 +265,87 @@ namespace DataLayer.API
             throw new Exception("Event with such id does not exist");
         }
 
+        public override void UpdateEvent(int id, int stateId, int clientId, DateTime dateTime)
+        {
+            State state1 = null;
+            foreach (State state in context.shop)
+            {
+                if (state.stateId == stateId)
+                {
+                    state1 = state;
+                }
+            }
+
+            Client client1 = null;
+            foreach (Client client in context.clients)
+            {
+                if (client.clientId == clientId)
+                {
+                    client1 = client;
+                }
+            }
+
+            if (state1 == null) throw new Exception("State with such stateid does not exist");
+            if (client1 == null) throw new Exception("Client with such clientid does not exist");
+
+
+            for (int i = 0; i < context.events.Count; i++)
+            {
+                if (context.events[i].Id == id)
+                {
+                    context.events[i].state = state1;
+                    context.events[i].client = client1;
+                    context.events[i].dateTime = dateTime;
+                    return;
+                }
+            }
+            throw new Exception("Event with such ID does not exist");
+        }
+
+
+
+
         #endregion
 
         #region State
 
-        public int GetClothesState(int id)
+        public override int GetClothesState(int id, int stateId)
         {
-            return context.shop.inventory[id];
+            State state = (State)context.shop.Where(s => s.stateId == stateId);
+            return state.inventory[id];
         }
 
-        public State GetState()
+        public override Dictionary<int, int> GetAllStates(int stateId)
         {
-            return context.shop;
+            State state = (State)context.shop.Where(s => s.stateId == stateId);
+            return context.shop[stateId].inventory;
         }
 
-        public Dictionary<int, int> GetAllStates()
+        public override void UpdateClothesStateInfo(int ID, int new_state, int stateId)
         {
-            return context.shop.inventory;
-        }
+            State state = (State)context.shop.Where(s => s.stateId == stateId);
 
-        public void UpdateClothesStateInfo(int ID, int new_state)
-        {
             if (context.catalog.products.ContainsKey(ID))
             {
 
-                context.shop.inventory[ID] = new_state;
+                context.shop[stateId].inventory[ID] = new_state;
                 return;
             }
             throw new Exception("No Clothes with such ID");
         }
 
-        public void DeleteOneClothesState(int id)
+        public override void DeleteOneClothesState(int id, int stateId)
         {
-            if (context.shop.inventory.ContainsKey(id))
+            State state = (State)context.shop.Where(s => s.stateId == stateId);
+
+            if (context.shop[stateId].inventory.ContainsKey(id))
             {
-                context.shop.inventory.Remove(id);
+                context.shop[stateId].inventory.Remove(id);
                 return;
             }
             throw new Exception("There is no such clothes already");
         }
+
 
         #endregion
 

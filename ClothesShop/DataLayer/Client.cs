@@ -11,13 +11,13 @@ namespace DataLayer
     {
         private String FIRSTNAME;
         private String LASTNAME;
-        private int ID;
+        public int clientId { get; }
 
         public Client(String name, String surname, int id)
         {
             FIRSTNAME = name;
             LASTNAME = surname;
-            ID = id;
+            clientId = id;
         }
 
         public string FirstName
@@ -34,8 +34,8 @@ namespace DataLayer
 
         public int Id
         {
-            get { return ID; } 
-            set { ID = value; }
+            get { return Id; } 
+            set { Id = value; }
         }
 
         public override bool Equals(object obj)
