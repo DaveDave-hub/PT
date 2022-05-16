@@ -6,9 +6,9 @@ namespace DataLayer.API
 {
     public interface IState
     {
-        public Dictionary<int, int> inventory { get; set; }
-        public ICatalog catalog { get; set; }
-        public int stateId { get; }
+        internal Dictionary<int, int> inventory { get; set; }
+        internal ICatalog catalog { get; set; }
+        internal int stateId { get; }
     }
 }
 
