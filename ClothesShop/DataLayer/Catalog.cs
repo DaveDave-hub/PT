@@ -7,7 +7,6 @@ namespace DataLayer.API
     {
         private Dictionary<int, IClothes> Products;
 
-
         public Catalog()
         {
 
@@ -17,8 +16,6 @@ namespace DataLayer.API
         {
             Products = PRODUCTS;
         }
-
-
 
         public Dictionary<int, IClothes> products
         {

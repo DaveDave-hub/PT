@@ -15,11 +15,8 @@ namespace Tests.DataGeneration
         {
             for (int i = 1; i <= 9; i++)
             {
-                Clothes clothes = new Clothes(i, randomPrice(5.00, 15.90), randomClothesType());
-                data.catalog.products.Add(i, clothes);
-
-                Client client = new Client(GenerateRandomString(6), GenerateRandomString(13), i.ToString());
-                data.clients.Add(client);
+                data.AddClothes(i, randomPrice(5.00, 15.90), randomClothesType());
+                data.AddClient(GenerateRandomString(6), GenerateRandomString(13), i);
             }
 
         }
@@ -33,10 +30,10 @@ namespace Tests.DataGeneration
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
-        public ClothesType randomClothesType()
+        public String randomClothesType()
         {
-            Array values = Enum.GetValues(typeof(ClothesType));
-            ClothesType randomClothesType = (ClothesType)values.GetValue(random.Next(values.Length));
+            String[] values = new String[5] { "trousers", "tshirt", "hoodie", "sneakers", "dress" };
+            String randomClothesType = (string)values.GetValue(random.Next(values.Length));
             return randomClothesType;
         }
 

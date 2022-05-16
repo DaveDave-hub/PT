@@ -3,6 +3,7 @@ using DataLayer;
 using Tests;
 using Tests.DataGeneration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DataLayer.API;
 
 namespace TestingData
 {
@@ -10,27 +11,23 @@ namespace TestingData
     public class FixedGenerationTest
 
     {
-
-        private DataContext our_shop;
-        private IDataRepository repository;
-        private IGenerator generator;
+        private DataLayerAPI repository;
+        private Tests.IGenerator generator;
 
 
         [TestInitialize]
         public void Initialize()
         {
-            our_shop = new DataContext();
-            repository = new DataRepository(our_shop);
+            repository = DataLayerAPI.GetDataRepository();
             generator = new FixedGenerator();
-            generator.GenerateData(our_shop);
+            generator.GenerateData(repository);
         }
 
         [TestMethod]
         public void NotNull()
         {
-            Assert.IsNotNull(repository.GetAllClients());
-            Assert.IsNotNull(repository.GetAllClothes());
-            Assert.IsNotNull(repository.GetAllEvents());
+            Assert.IsNotNull(repository.GetAllClientsNumber());
+            Assert.IsNotNull(repository.GetAllEventsNumber());
 
         }
 

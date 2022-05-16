@@ -85,7 +85,7 @@ namespace LogicLayer.API
 
 
 
-        public IEnumerable<Event> GetEventsForTheClient(string id)
+/*        public IEnumerable<Event> GetEventsForTheClient(string id)
         {
             Client client = repository.GetClient(id);
             List<Event> allEvents = new List<Event>();
@@ -125,7 +125,7 @@ namespace LogicLayer.API
             repository.AddEvent(restockEvent);
             UpdateClothesStateInfo(clothesId, newAmount);
 
-        }
+        }*/
 
         public void AddandUpdate(int id, double price, String type, int ID, int new_state, int stateId)
         {

@@ -309,6 +309,11 @@ namespace DataLayer.API
 
         #region State
 
+        public override void AddStateWithCurrentCatalog(int id, Dictionary<int, int> inventory)
+        {
+            context.shop.Add(new State(inventory, context.catalog, id));
+        }
+
         public override int GetClothesState(int id, int stateId)
         {
             State state = (State)context.shop.Where(s => s.stateId == stateId);

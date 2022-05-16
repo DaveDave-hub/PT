@@ -12,7 +12,7 @@ namespace Tests
     public class DataServiceTest
     {
 
-		private DataService service;
+		/*private DataService service;
 		private DataContext our_shop;
 		private IGenerator generator;
 	
@@ -164,6 +164,6 @@ namespace Tests
 
 
 
-
+*/
 	}
 }
