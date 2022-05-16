@@ -3,6 +3,7 @@ using DataLayer;
 using Tests.DataGeneration;
 using Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using DataLayer.API;
 
 namespace TestingData
 {
@@ -12,7 +13,7 @@ namespace TestingData
     {
 
         private DataContext our_shop;
-        private IDataRepository repository;
+        private DataLayerAPI repository;
         private IGenerator generator;
 
 

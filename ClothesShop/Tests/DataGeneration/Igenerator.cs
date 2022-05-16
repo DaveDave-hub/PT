@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 using DataLayer;
+using DataLayer.API;
 
 
 namespace Tests
 {
-    public interface IGenerator
-    {
+   public interface IGen
+   {
 
-        void GenerateData(DataContext data);
+       void GenerateData(DataLayerAPI data);
 
-    }
-}
+   }
+} 

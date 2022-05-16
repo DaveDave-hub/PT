@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using DataLayer;
+using DataLayer.API;
 
 namespace Tests.DataGeneration
 {
     public class FixedGenerator : IGenerator
     {
 
-        public void GenerateData(DataContext data)
+        public void GenerateData(DataLayerAPI data)
         {
             Client c1 = new Client("James", "Bond", "1");
             data.clients.Add(c1);

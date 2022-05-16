@@ -8,113 +8,84 @@ using System.Text;
 
 namespace LogicLayer.API
 {
-
+    
     public abstract class DataServiceAPI
     {
         private DataLayerAPI repository;
+
 
         public DataServiceAPI(DataLayerAPI repository)
         {
             this.repository = repository;
         }
 
-        public abstract Clothes GetClothesByType(DataLayer.ClothesType type)
+        #region Client
+        public void AddClient(String firstName, String lastName, int id)
         {
-            return repository.GetClothesByType(type);
-        }
-        public abstract Clothes GetClothesById(int id)
-        {
-            return repository.GetClothes(id);
-        }
-        public abstract int GetNumberOfClothes()
-        {
-            return repository.GetClothesNumber();
+            repository.AddClient(firstName, lastName, id);
         }
 
-        public abstract int GetAllClientsNumber()
-        {
-            return repository.GetAllClientsNumber();
-
-        }
-
-        public abstract int GetStateOfClothes(int id)
-        {
-            return repository.GetClothesState(id, 2);
-        }
-
-        public abstract void AddClothes(Clothes clothes)
-        {
-            repository.AddClothes(clothes);
-        }
-
-        public abstract void DeleteClothes(int id)
-        {
-            repository.DeleteClothes(id);
-        }
-
-        public abstract Client GetClientById(string id)
-        {
-            return repository.GetClient(id);
-        }
-        public abstract void AddClient(Client client)
-        {
-            repository.AddClient(client);
-        }
-
-        public abstract void UpdateClientInfo(String first_name, String last_name, String Id)
-        {
-            Client C = new Client(first_name, last_name, Id);
-            repository.UpdateClientsInfo(C);
-        }
-
-        public abstract void DeleteClient(String id)
+        public void DeleteClient(int id)
         {
             repository.DeleteClient(id);
         }
 
-        public abstract int GetClientNumber()
+        public void UpdateClientsInfo(String firstName, String lastName, int id)
+        {
+            repository.UpdateClientsInfo(firstName, lastName, id);
+        }
+
+        public int GetAllClientsNumber()
         {
             return repository.GetAllClientsNumber();
         }
 
-
-        public abstract State GetState()
+        public String GetClientFirstName(int id)
         {
-            return repository.GetState();
+            return repository.GetClientFirstName(id);
         }
 
-        public abstract void UpdateClothesStateInfo(int ID, int new_state)
+        public String GetClientLastName(int id)
         {
-            repository.UpdateClothesStateInfo(ID, new_state);
+            return repository.GetClientLastName(id);
         }
 
-        public abstract void DeleteOneClothesState(int id)
-        {
-            repository.DeleteOneClothesState(id);
+        #endregion
 
-        }
+        #region Catalog
 
-        public abstract void AddEvent(Event e)
-        {
-            repository.AddEvent(e);
-        }
+        public void AddClothes(int id, double price, String type) { repository.AddClothes(id, price, type); }
+        public void UpdateClothesInfo(int id, double price, String type) { repository.UpdateClothesInfo(id, price, type); }
+        public void DeleteClothes(int id) { repository.DeleteClothes(id); }
+        public int GetClothesNumber() { return repository.GetClothesNumber(); }
+        public String GetClothes(int id) { return repository.GetClothes(id); }
 
-        public abstract int GetAllEventsNumber()
-        {
-            return repository.GetAllEventsNumber();
-        }
+        #endregion
+
+        #region Event
+
+        public int GetAllEventsNumber() { return repository.GetAllEventsNumber(); }
+        public int GetEventClientId(int id) { return repository.GetEventClientId(id); }
+        public int GetEventStateId(int id) { return repository.GetEventStateId(id); }
+        public DateTime GetEventTime(int id) { return repository.GetEventTime(id); }
+        public void AddNewBatchEvent(int id, int stateId, int clientId, DateTime dateTime) { repository.AddNewBatchEvent(id, stateId, clientId, dateTime); }
+        public void DeleteEvent(int id) { repository.DeleteEvent(id); }
+        public void UpdateEvent(int id, int stateId, int clientId, DateTime dateTime) { repository.UpdateEvent(id, stateId, clientId, dateTime); }
+
+        #endregion
+
+        #region Event
+
+        public int GetClothesState(int id, int stateId) { return repository.GetClothesState(id, stateId); }
+        public Dictionary<int, int> GetAllStates(int stateId) { return repository.GetAllStates(stateId); }
+        public void UpdateClothesStateInfo(int ID, int new_state, int stateId) { repository.UpdateClothesStateInfo(ID, new_state, stateId); }
+        public void DeleteOneClothesState(int id, int stateId) { repository.DeleteOneClothesState(id, stateId); }
+
+        #endregion
 
 
-        public abstract void DeleteEvent(string id)
-        {
-            repository.DeleteEvent(id);
-        }
-        public abstract void GetEventByID(string id)
-        {
-            repository.GetEventById(id);
-        }
 
-        public abstract IEnumerable<Event> GetEventsForTheClient(string id)
+        public IEnumerable<Event> GetEventsForTheClient(string id)
         {
             Client client = repository.GetClient(id);
             List<Event> allEvents = new List<Event>();
@@ -129,7 +100,7 @@ namespace LogicLayer.API
             return allEvents;
         }
 
-        public abstract void BuyClothes(string customerId, int clothesId, DateTime dayOfBuying, int amount)
+        public void BuyClothes(string customerId, int clothesId, DateTime dayOfBuying, int amount)
         {
             Client client = repository.GetClient(customerId);
             Clothes clothes = repository.GetClothes(clothesId);
@@ -144,8 +115,8 @@ namespace LogicLayer.API
             UpdateClothesStateInfo(clothesId, amountLeft);
 
         }
-
-        public abstract void NewBatch(string supplierId, int clothesId, DateTime dayOfRestock, int amountProvided)
+        
+        public void NewBatch(string supplierId, int clothesId, DateTime dayOfRestock, int amountProvided)
         {
             Client supplier = repository.GetClient(supplierId);
             int newAmount = amountProvided + GetStateOfClothes(clothesId);
@@ -156,11 +127,11 @@ namespace LogicLayer.API
 
         }
 
-        public abstract void AddandUpdate(Clothes clothes, int amount)
+        public void AddandUpdate(int id, double price, String type, int ID, int new_state, int stateId)
         {
 
-            AddClothes(clothes);
-            UpdateClothesStateInfo(clothes.Id, amount);
+            AddClothes(id, price, type);
+            UpdateClothesStateInfo(ID, new_state, stateId);
         }
     }
 }

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataLayer;
+using DataLayer.API;
 
 namespace Tests.DataGeneration
 {
     public class RandomGenerator : IGenerator
     {
 
-        public void GenerateData(DataContext data)
+        public void GenerateData(DataLayerAPI data)
         {
             for (int i = 1; i <= 9; i++)
             {
