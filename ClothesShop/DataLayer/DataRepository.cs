@@ -20,16 +20,17 @@ namespace DataLayer.API
         {
             Client c = new Client(firstName, lastName, id);
 
-            context.clients.Add(c);
+            context.Clients.Add(c);
         }
 
         public override String GetClientFirstName(int id)
         {
-            foreach (Client C in context.clients)
+            foreach (Client c in context.Clients)
             {
-                if (C.Id == id)
+                if (c.Id == id)
                 {
-                    return C.FirstName;
+                    Console.WriteLine(c.FirstName);
+                    return c.FirstName;
                 }
             }
             throw new Exception("There is no client with this ID");
@@ -37,7 +38,7 @@ namespace DataLayer.API
 
         public override String GetClientLastName(int id)
         {
-            foreach (Client C in context.clients)
+            foreach (Client C in context.Clients)
             {
                 if (C.Id == id)
                 {
@@ -49,18 +50,18 @@ namespace DataLayer.API
 
         public override int GetAllClientsNumber()
         {
-            return context.clients.Count;
+            return context.Clients.Count;
         }
         public override void UpdateClientsInfo(String firstName, String lastName, int id)
         {
             Client C = new Client(firstName, lastName, id);
 
-            for (int i = 0; i < context.clients.Count; i++)
+            for (int i = 0; i < context.Clients.Count; i++)
             {
-                if (context.clients[i].Id == C.Id)
+                if (context.Clients[i].Id == C.Id)
                 {
-                    context.clients[i].FirstName = C.FirstName;
-                    context.clients[i].LastName = C.LastName;
+                    context.Clients[i].FirstName = C.FirstName;
+                    context.Clients[i].LastName = C.LastName;
                     return;
                 }
             }
@@ -69,11 +70,11 @@ namespace DataLayer.API
 
         public override void DeleteClient(int id)
         {
-            for (int i = 0; i < context.clients.Count; i++)
+            for (int i = 0; i < context.Clients.Count; i++)
             {
-                if (context.clients[i].Id == id)
+                if (context.Clients[i].Id == id)
                 {
-                    context.clients.Remove(context.clients[i]);
+                    context.Clients.Remove(context.Clients[i]);
                     return;
                 }
             }
@@ -107,22 +108,18 @@ namespace DataLayer.API
 
             Clothes d = new Clothes(id, price, clothesType);
 
-            if (context.catalog.products.ContainsKey(d.Id))
-            {
-                throw new Exception("No such clothes in our shop");
-            }
-            context.catalog.products.Add(d.Id, d);
+            context.Catalog.Products.Add(d.Id, d);
         }
 
         public override int GetClothesNumber()
         {
-            return context.catalog.products.Count();
+            return context.Catalog.Products.Count();
 
         }
 
         public override String GetClothes(int id)
         {
-            foreach(var clothes in context.catalog.products)
+            foreach(var clothes in context.Catalog.Products)
             {
                 if (clothes.Value.Id == id)
                 {
@@ -159,10 +156,10 @@ namespace DataLayer.API
 
             Clothes D = new Clothes(id, price, clothesType);
 
-            if (context.catalog.products.ContainsKey(D.Id))
+            if (context.Catalog.Products.ContainsKey(D.Id))
             {
-                context.catalog.products[D.Id].Price = D.Price;
-                context.catalog.products[D.Id].ClothesType = D.ClothesType;
+                context.Catalog.Products[D.Id].Price = D.Price;
+                context.Catalog.Products[D.Id].ClothesType = D.ClothesType;
                 return;
             }
             throw new Exception("No such clothes in our shop");
@@ -170,10 +167,13 @@ namespace DataLayer.API
 
         public override void DeleteClothes(int id)
         {
-            if (context.catalog.products.ContainsKey(id))
+            foreach (var product in context.Catalog.Products)
             {
-                context.catalog.products.Remove(id);
-                return;
+                if (product.Key == id)
+                {
+                    context.Catalog.Products.Remove(id);
+                    return;
+                }
             }
             throw new Exception("There is no such clothes already");
         }
@@ -184,16 +184,16 @@ namespace DataLayer.API
 
         public override int GetAllEventsNumber()
         {
-            return context.events.Count;
+            return context.Events.Count;
         }
 
         public override int GetEventClientId(int id)
         {
-            for (int i = 0; i < context.events.Count; i++)
+            for (int i = 0; i < context.Events.Count; i++)
             {
-                if (context.events[i].Id == id)
+                if (context.Events[i].Id == id)
                 {
-                    return context.events[i].client.Id;
+                    return context.Events[i].client.Id;
                 }
             }
             throw new Exception("Event with such id does not exist");
@@ -201,11 +201,11 @@ namespace DataLayer.API
 
         public override int GetEventStateId(int id)
         {
-            for (int i = 0; i < context.events.Count; i++)
+            for (int i = 0; i < context.Events.Count; i++)
             {
-                if (context.events[i].Id == id)
+                if (context.Events[i].Id == id)
                 {
-                    return context.events[i].state.stateId;
+                    return context.Events[i].state.StateId;
                 }
             }
             throw new Exception("Event with such id does not exist");
@@ -213,11 +213,11 @@ namespace DataLayer.API
 
         public override DateTime GetEventTime(int id)
         {
-            for (int i = 0; i < context.events.Count; i++)
+            for (int i = 0; i < context.Events.Count; i++)
             {
-                if (context.events[i].Id == id)
+                if (context.Events[i].Id == id)
                 {
-                    return context.events[i].dateTime;
+                    return context.Events[i].dateTime;
                 }
             }
             throw new Exception("Event with such id does not exist");
@@ -227,18 +227,18 @@ namespace DataLayer.API
         public override void AddNewBatchEvent(int id, int stateId, int clientId, DateTime dateTime)
         {
             State state1 = null;
-            foreach (State state in context.shop)
+            foreach (State state in context.Shop)
             {
-                if(state.stateId == stateId)
+                if(state.StateId == stateId)
                 {
                     state1 = state;
                 }
             }
 
             Client client1 = null;
-            foreach (Client client in context.clients)
+            foreach (Client client in context.Clients)
             {
-                if (client.clientId == clientId)
+                if (client.Id == clientId)
                 {
                     client1 = client;
                 }
@@ -249,16 +249,16 @@ namespace DataLayer.API
 
             IEvent e = new NewBatchEvent(id, state1, client1, dateTime);
 
-            context.events.Add(e);
+            context.Events.Add(e);
         }
 
         public override void DeleteEvent(int id)
         {
-            for (int i = 0; i < context.events.Count; i++)
+            for (int i = 0; i < context.Events.Count; i++)
             {
-                if (context.events[i].Id == id)
+                if (context.Events[i].Id == id)
                 {
-                    context.events.Remove(context.events[i]);
+                    context.Events.Remove(context.Events[i]);
                     return;
                 }
             }
@@ -268,18 +268,18 @@ namespace DataLayer.API
         public override void UpdateEvent(int id, int stateId, int clientId, DateTime dateTime)
         {
             State state1 = null;
-            foreach (State state in context.shop)
+            foreach (State state in context.Shop)
             {
-                if (state.stateId == stateId)
+                if (state.StateId == stateId)
                 {
                     state1 = state;
                 }
             }
 
             Client client1 = null;
-            foreach (Client client in context.clients)
+            foreach (Client client in context.Clients)
             {
-                if (client.clientId == clientId)
+                if (client.Id == clientId)
                 {
                     client1 = client;
                 }
@@ -289,13 +289,13 @@ namespace DataLayer.API
             if (client1 == null) throw new Exception("Client with such clientid does not exist");
 
 
-            for (int i = 0; i < context.events.Count; i++)
+            for (int i = 0; i < context.Events.Count; i++)
             {
-                if (context.events[i].Id == id)
+                if (context.Events[i].Id == id)
                 {
-                    context.events[i].state = state1;
-                    context.events[i].client = client1;
-                    context.events[i].dateTime = dateTime;
+                    context.Events[i].state = state1;
+                    context.Events[i].client = client1;
+                    context.Events[i].dateTime = dateTime;
                     return;
                 }
             }
@@ -311,29 +311,50 @@ namespace DataLayer.API
 
         public override void AddStateWithCurrentCatalog(int id, Dictionary<int, int> inventory)
         {
-            context.shop.Add(new State(inventory, context.catalog, id));
+            context.Shop.Add(new State(inventory, context.Catalog, id));
         }
 
         public override int GetClothesState(int id, int stateId)
         {
-            State state = (State)context.shop.Where(s => s.stateId == stateId);
-            return state.inventory[id];
+            State state = null;
+            foreach (var s in context.Shop)
+            {
+                if (s.StateId == stateId)
+                {
+                    state = s;
+                }
+            }
+            return state.Inventory[id];
         }
 
         public override Dictionary<int, int> GetAllStates(int stateId)
         {
-            State state = (State)context.shop.Where(s => s.stateId == stateId);
-            return context.shop[stateId].inventory;
+            State state = null;
+            foreach (var s in context.Shop)
+            {
+                if (s.StateId == stateId)
+                {
+                    state = s;
+                }
+            }
+            return context.Shop[stateId].Inventory;
         }
 
         public override void UpdateClothesStateInfo(int ID, int new_state, int stateId)
         {
-            State state = (State)context.shop.Where(s => s.stateId == stateId);
-
-            if (context.catalog.products.ContainsKey(ID))
+            State state = null;
+            foreach (var s in context.Shop)
+            {
+                if (s.StateId == stateId)
+                {
+                    state = s;
+                }
+            }
+            
+            if (context.Catalog.Products.ContainsKey(ID))
             {
 
-                context.shop[stateId].inventory[ID] = new_state;
+                state.Inventory[ID] = new_state;
                 return;
             }
             throw new Exception("No Clothes with such ID");
@@ -341,11 +362,18 @@ namespace DataLayer.API
 
         public override void DeleteOneClothesState(int id, int stateId)
         {
-            State state = (State)context.shop.Where(s => s.stateId == stateId);
-
-            if (context.shop[stateId].inventory.ContainsKey(id))
+            State state = null;
+            foreach (var s in context.Shop)
             {
-                context.shop[stateId].inventory.Remove(id);
+                if (s.StateId == stateId)
+                {
+                    state = s;
+                }
+            }
+
+            if (context.Shop[stateId].Inventory.ContainsKey(id))
+            {
+                context.Shop[stateId].Inventory.Remove(id);
                 return;
             }
             throw new Exception("There is no such clothes already");

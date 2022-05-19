@@ -11,11 +11,12 @@ namespace DataLayer.API
 
     public abstract class DataLayerAPI
     {
+
         public static DataLayerAPI GetDataRepository()
         {
-            return new DataRepository(new DataContext());
+            DataContext data = new DataContext();
+            return new DataRepository(data);
         }
-
 
         public abstract void AddClient(String firstName, String lastName, int id);
         public abstract String GetClientFirstName(int id);

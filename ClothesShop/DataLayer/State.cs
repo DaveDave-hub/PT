@@ -7,23 +7,17 @@ using DataLayer.API;
 
 namespace DataLayer
 {
-
-
-
     internal class State : IState
     {
-        public Dictionary<int, int> inventory { get; set; }
-        public ICatalog catalog { get; set; }
-        public int stateId { get; }
-
-        public State() { }
+        public Dictionary<int, int> Inventory { get; set; }
+        public ICatalog Catalog { get; set; }
+        public int StateId { get; }
 
         public State(Dictionary<int, int> _inventory, ICatalog _catalog, int id)
         {
-            inventory = _inventory;
-            catalog = _catalog;
-            stateId = id;
-
-         }
+            Inventory = _inventory;
+            Catalog = _catalog;
+            StateId = id;
+        }
     }
 }

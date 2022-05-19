@@ -1,19 +1,15 @@
 ﻿using System;
-using DataLayer;
-using Tests;
-using Tests.DataGeneration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DataLayer.API;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tests.DataGeneration;
 
-namespace TestingData
+namespace Tests
 {
     [TestClass]
     public class DataRepositoryTest
     {
-
         private DataLayerAPI data;
         private Tests.IGenerator generator;
-
 
         [TestInitialize]
         public void Initialize()
@@ -27,7 +23,6 @@ namespace TestingData
         [TestMethod]
         public void AddAndGetClient()
         {
-           
             Assert.AreEqual(data.GetAllClientsNumber(), 4);
             data.AddClient("Tom", "Fitz", 6);
             Assert.AreEqual(data.GetAllClientsNumber(), 5);
@@ -43,11 +38,9 @@ namespace TestingData
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.Exception))]
         public void DeleteClientException()
         {
-            data.DeleteClient(2834);
-            Assert.AreEqual(data.GetAllClientsNumber(), 3);
+            Assert.ThrowsException<Exception>(() => data.DeleteClient(2834));
         }
 
         [TestMethod]
@@ -79,16 +72,6 @@ namespace TestingData
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.Exception))]
-        public void DeleteClothesException()
-        {
-
-            data.DeleteClothes(12345);
-            Assert.AreEqual(data.GetClothesNumber(), 2);
-
-        }
-
-        [TestMethod]
         public void UpdateClothesInfo()
         {
             String temp = data.GetClothes(2);
@@ -108,13 +91,12 @@ namespace TestingData
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.Exception))]
         public void EventTestsDeleteException()
         {
             DateTime now = DateTime.Now;
             data.AddNewBatchEvent(1,1,1, now);
             Assert.AreEqual(data.GetAllEventsNumber(), 1);
-            data.DeleteEvent(2);
+            Assert.ThrowsException<Exception>(() => data.DeleteEvent(2));
 
         }
 
@@ -140,17 +122,9 @@ namespace TestingData
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.Exception))]
         public void ExceptionNoClothesToDeleteTest()
         {
-            Assert.AreEqual(data.GetClothesState(1, 1), 10);
-            data.DeleteOneClothesState(981648, 1);
-
-
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => data.DeleteOneClothesState(981648, 1));
         }
-
-
-
-
     }
 }

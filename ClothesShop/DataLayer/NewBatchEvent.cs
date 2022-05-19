@@ -7,26 +7,17 @@ namespace DataLayer
 {
     internal class NewBatchEvent : IEvent
     {
-        private int id;
-        private DateTime Time;
-        private IState State;
-        private IClient Client;
-
-        public NewBatchEvent(int ID, State STATE, Client CLIENT, DateTime DATETIME)
-        {
-            id = ID;  
-            Time = DATETIME;
-            State = STATE;
-            Client = CLIENT;
-        }
-
-
         public int Id { get; }
         public DateTime dateTime { get; set; }
-        public DateTime DateTime { get; set; }
         public IState state { get; set; }
         public IClient client { get; set; }
 
-        
+        public NewBatchEvent(int ID, State STATE, Client CLIENT, DateTime DATETIME)
+        {
+            Id = ID;  
+            dateTime = DATETIME;
+            state = STATE;
+            client = CLIENT;
+        }
     }
 }
