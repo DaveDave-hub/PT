@@ -88,33 +88,6 @@ namespace Tests
 		}
 		
 
-		/*[TestMethod]
-		public void BuyClothesTest()
-		{
-			Client client = new Client("Ann", "Smith", "5");
-			service.AddClient(client);
-			Clothes clothes = new Clothes(3, 100, ClothesType.dress);
-			DateTime now = DateTime.Now;
-			service.AddandUpdate(clothes, 50);
-			int stateThen = service.GetStateOfClothes(3);
-			service.BuyClothes("5", 3, now, 2);
-			Assert.AreEqual(stateThen - 2, service.GetStateOfClothes(3));
-		}
-
-
-		[TestMethod]
-		public void NewBatchTest()
-		{
-			Client supplier = new Client("Bershka", "", "5");
-			service.AddClient(supplier);
-			Clothes clothes = new Clothes(4, 100, ClothesType.sneakers);
-			DateTime now = DateTime.Now;
-			service.AddandUpdate(clothes, 0);
-			int stateThen = service.GetStateOfClothes(4);
-			service.NewBatch("5", 4, now, 99);
-			Assert.AreEqual(stateThen + 99, service.GetStateOfClothes(4));
-		}*/
-
 		[TestMethod]
 		public void EventUserNewBatchTests()
 		{
