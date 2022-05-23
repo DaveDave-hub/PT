@@ -2,8 +2,8 @@
 
 namespace DataLayer.API
 {
-    internal interface ICatalog
+    public interface ICatalog
     {
-        internal Dictionary<int, IClothes> products { get; set; }
+        public Dictionary<int, IClothes> Products { get; set; }
     }
 }

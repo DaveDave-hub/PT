@@ -14,10 +14,10 @@ namespace DataLayer
 
         public BuyingEvent(int ID, State STATE, Client CLIENT, DateTime DATETIME)
         {
-            this.Id = ID;
-            this.dateTime = DATETIME;
-            this.state = STATE;
-            this.client = CLIENT;
+            Id = ID;
+            dateTime = DATETIME;
+            state = STATE;
+            client = CLIENT;
         }
     }
 }

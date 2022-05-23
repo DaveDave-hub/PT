@@ -7,10 +7,8 @@ using DataLayer.API;
 
 namespace Tests
 {
-   public interface IGen
+   public interface IGenerator
    {
-
-       void GenerateData(DataLayerAPI data);
-
+        void GenerateData(DataLayerAPI data);
    }
 } 

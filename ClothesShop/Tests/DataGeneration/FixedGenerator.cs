@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using DataLayer;
 using DataLayer.API;
 
 namespace Tests.DataGeneration
@@ -11,29 +10,19 @@ namespace Tests.DataGeneration
 
         public void GenerateData(DataLayerAPI data)
         {
-            Client c1 = new Client("James", "Bond", "1");
-            data.clients.Add(c1);
-            Client c2 = new Client("Hermione", "Granger", "2");
-            data.clients.Add(c2);
-            Client c3 = new Client("Kamil", "Stoch", "3");
-            data.clients.Add(c3);
-            Client c4 = new Client("Agnieszka", "Osiecka", "4");
-            data.clients.Add(c3);
+            data.AddClient("James", "Bond", 1);
+            data.AddClient("Hermione", "Granger", 2);
+            data.AddClient("Kamil", "Stoch", 3);
+            data.AddClient("Agnieszka", "Osiecka", 4);
 
+            data.AddClothes(1, 70, "hoodie");
+            data.AddClothes(2, 45, "tshirt");
 
-            Clothes cl1 = new Clothes(1, 70, ClothesType.hoodie);
-            data.catalog.products.Add(1, cl1);
-            Clothes cl2 = new Clothes(2, 45, ClothesType.tshirt);
-            data.catalog.products.Add(2, cl2);
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            dict.Add(1, 10);
+            dict.Add(2, 10);
 
-            data.shop.catalog = data.catalog;
-
-            for(int i = 1; i <= data.catalog.products.Count; i++)
-            {
-                data.shop.inventory.Add(data.catalog.products[i].Id, 10);
-            }
-
-
+            data.AddStateWithCurrentCatalog(1, dict);
 
         }
     }

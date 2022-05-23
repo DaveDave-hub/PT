@@ -9,8 +9,6 @@ namespace Tests.DataGeneration
 {
     public class EmptyGenerator : IGenerator
     {
-
-
         public void GenerateData(DataLayerAPI data)
         {
 

@@ -1,27 +1,19 @@
 ﻿using System.Collections.Generic;
 
-
 namespace DataLayer.API
 {
     internal class Catalog : ICatalog
     {
-        private Dictionary<int, IClothes> Products;
+        public Dictionary<int, IClothes> Products { get; set; } = new Dictionary<int, IClothes>() { };
 
         public Catalog()
         {
-
+            Products = new Dictionary<int, IClothes>();
         }
 
-        public Catalog(Dictionary<int, IClothes> PRODUCTS)
+        public Catalog(Dictionary<int, IClothes> products)
         {
-            Products = PRODUCTS;
+            Products = products;
         }
-
-        public Dictionary<int, IClothes> products
-        {
-            get { return Products; }
-            set { Products = value; }
-        }
-
     }
 }

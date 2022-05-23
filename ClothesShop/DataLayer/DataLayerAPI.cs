@@ -12,6 +12,12 @@ namespace DataLayer.API
     public abstract class DataLayerAPI
     {
 
+        public static DataLayerAPI GetDataRepository()
+        {
+            DataContext data = new DataContext();
+            return new DataRepository(data);
+        }
+
         public abstract void AddClient(String firstName, String lastName, int id);
         public abstract String GetClientFirstName(int id);
         public abstract String GetClientLastName(int id);
@@ -35,10 +41,11 @@ namespace DataLayer.API
         public abstract DateTime GetEventTime(int id); 
         public abstract void AddNewBatchEvent(int id, int stateId, int clientId, DateTime dateTime); 
         public abstract void DeleteEvent(int id);  
-        public abstract void UpdateEvent(int id, int stateId, int clientId, DateTime dateTime); 
+        public abstract void UpdateEvent(int id, int stateId, int clientId, DateTime dateTime);
 
 
 
+        public abstract void AddStateWithCurrentCatalog(int id, Dictionary<int, int> inventory);
         public abstract int GetClothesState(int id, int stateId);
         public abstract Dictionary<int, int> GetAllStates(int stateId);
         public abstract void UpdateClothesStateInfo(int ID, int new_state, int stateId);

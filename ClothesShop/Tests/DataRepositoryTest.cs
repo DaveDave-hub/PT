@@ -1,147 +1,113 @@
 ﻿using System;
-using DataLayer;
-using Tests;
-using Tests.DataGeneration;
+using DataLayer.API;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tests.DataGeneration;
 
-namespace TestingData
+namespace Tests
 {
     [TestClass]
     public class DataRepositoryTest
     {
-
-        private DataContext our_shop;
-        private IDataRepository repository;
+        private DataLayerAPI data;
         private IGenerator generator;
-
 
         [TestInitialize]
         public void Initialize()
         {
-            our_shop = new DataContext();
-            repository = new DataRepository(our_shop);
+            data = DataLayerAPI.GetDataRepository();
             generator = new FixedGenerator();
-            generator.GenerateData(our_shop);
+            generator.GenerateData(data);
         }
 
 
         [TestMethod]
         public void AddAndGetClient()
         {
-            Client c = new Client("Tom", "Fitz", "6");
-            Assert.AreEqual(repository.GetAllClientsNumber(), 4);
-            repository.AddClient(c);
-            Assert.AreEqual(repository.GetAllClientsNumber(), 5);
-            Client temp = repository.GetClient("6");
-            Assert.AreEqual(temp, c);
+            Assert.AreEqual(data.GetAllClientsNumber(), 4);
+            data.AddClient("Tom", "Fitz", 6);
+            Assert.AreEqual(data.GetAllClientsNumber(), 5);
+            String firstName = data.GetClientFirstName(6);
+            Assert.AreEqual(firstName, "Tom");
         }
 
         [TestMethod]
         public void DeleteClientCorrect()
         {
-
-            repository.DeleteClient("1");
-            Assert.AreEqual(repository.GetAllClientsNumber(), 3);
-
+            data.DeleteClient(1);
+            Assert.AreEqual(data.GetAllClientsNumber(), 3);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.Exception))]
         public void DeleteClientException()
         {
-
-            repository.DeleteClient("EEEEOOO");
-            Assert.AreEqual(repository.GetAllClientsNumber(), 3);
-
+            Assert.ThrowsException<Exception>(() => data.DeleteClient(2834));
         }
 
         [TestMethod]
         public void UpdateClientInfo()
         {
-            Client temp = repository.GetClient("1");
-            Assert.AreEqual("James", temp.FirstName);
-            Client c = new Client("Alex", "Bond", "1");
-            repository.UpdateClientsInfo(c);
-            temp = repository.GetClient("1");
-            Assert.AreEqual("Alex", temp.FirstName);
+            String temp = data.GetClientFirstName(1);
+            Assert.AreEqual("James", temp);
+            data.UpdateClientsInfo("Alex", "Bond", 1);
+            temp = data.GetClientFirstName(1);
+            Assert.AreEqual("Alex", temp);
         }
 
 
         [TestMethod]
         public void AddAndGetClothes()
         {
-            Clothes c = new Clothes(7, 35, ClothesType.tshirt);
-            Assert.AreEqual(repository.GetClothesNumber(), 2);
-            repository.AddClothes(c);
-            Assert.AreEqual(repository.GetClothesNumber(), 3);
-            Clothes temp = repository.GetClothes(7);
-            Assert.AreEqual(temp, c);
+            Assert.AreEqual(data.GetClothesNumber(), 2);
+            data.AddClothes(7, 35, "tshirt");
+            Assert.AreEqual(data.GetClothesNumber(), 3);
+            String temp = data.GetClothes(7);
+            Assert.AreEqual(temp, "tshirt");
         }
 
         [TestMethod]
         public void DeleteClothesCorrect()
         {
-
-            repository.DeleteClothes(2);
-            Assert.AreEqual(repository.GetClothesNumber(), 1);
-
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(System.Exception))]
-        public void DeleteClothesException()
-        {
-
-            repository.DeleteClothes(12345);
-            Assert.AreEqual(repository.GetClothesNumber(), 2);
-
+            data.DeleteClothes(2);
+            Assert.AreEqual(data.GetClothesNumber(), 1);
         }
 
         [TestMethod]
         public void UpdateClothesInfo()
         {
-            Clothes temp = repository.GetClothes(2);
-            Assert.AreEqual(45, temp.Price);
-            Clothes c = new Clothes(2, 30, ClothesType.tshirt);
-            repository.UpdateClothesInfo(c);
-            temp = repository.GetClothes(2);
-            Assert.AreEqual(30, temp.Price);
+            String temp = data.GetClothes(2);
+            Assert.AreEqual("tshirt", temp);
+            data.UpdateClothesInfo(2, 30, "hoodie");
+            temp = data.GetClothes(2);
+            Assert.AreEqual("hoodie", temp);
         }
 
         [TestMethod]
         public void EventTests()
         {
-            Client temp = repository.GetClient("1");
             DateTime now = DateTime.Now;
-            Event b = new BuyingEvent("b1", repository.GetState(), temp, now);
-            repository.AddEvent(b);
-            Assert.AreEqual(repository.GetAllEventsNumber(), 1);
+            data.AddNewBatchEvent(1, 1, 1, now);
+            Assert.AreEqual(data.GetAllEventsNumber(), 1);
 
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.Exception))]
         public void EventTestsDeleteException()
         {
-            Client temp = repository.GetClient("1");
             DateTime now = DateTime.Now;
-            Event b = new BuyingEvent("b1", repository.GetState(), temp, now);
-            repository.AddEvent(b);
-            Assert.AreEqual(repository.GetAllEventsNumber(), 1);
-            repository.DeleteEvent("cos");
+            data.AddNewBatchEvent(1,1,1, now);
+            Assert.AreEqual(data.GetAllEventsNumber(), 1);
+            Assert.ThrowsException<Exception>(() => data.DeleteEvent(2));
 
         }
 
         [TestMethod]
         public void EventCorrectDeleteTests()
         {
-            Client temp = repository.GetClient("1");
             DateTime now = DateTime.Now;
-            Event b = new BuyingEvent("b1", repository.GetState(), temp, now);
-            repository.AddEvent(b);
-            Assert.AreEqual(repository.GetAllEventsNumber(), 1);
-            repository.DeleteEvent("b1");
-            Assert.AreEqual(repository.GetAllEventsNumber(), 0);
+            data.AddNewBatchEvent(1, 1, 1, now);
+            Assert.AreEqual(data.GetAllEventsNumber(), 1);
+            data.DeleteEvent(1);
+            Assert.AreEqual(data.GetAllEventsNumber(), 0);
 
         }
 
@@ -149,24 +115,16 @@ namespace TestingData
         [TestMethod]
         public void StatesTest()
         {
-            Assert.AreEqual(repository.GetClothesState(1), 10);
-            repository.UpdateClothesStateInfo(1, 13);
-            Assert.AreEqual(repository.GetClothesState(1), 13);
+            Assert.AreEqual(data.GetClothesState(1, 1), 10);
+            data.UpdateClothesStateInfo(1, 13, 1);
+            Assert.AreEqual(data.GetClothesState(1, 1), 13);
 
         }
 
         [TestMethod]
-        [ExpectedException(typeof(System.Exception))]
         public void ExceptionNoClothesToDeleteTest()
         {
-            Assert.AreEqual(repository.GetClothesState(1), 10);
-            repository.DeleteOneClothesState(981648);
-
-
+            Assert.ThrowsException<ArgumentOutOfRangeException>(() => data.DeleteOneClothesState(981648, 1));
         }
-
-
-
-
     }
 }

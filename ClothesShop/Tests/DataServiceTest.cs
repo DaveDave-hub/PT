@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DataLayer;
-using LogicLayer;
+using DataLayer.API;
+using LogicLayer.API;
 using Tests.DataGeneration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -13,64 +14,55 @@ namespace Tests
     {
 
 		private DataService service;
-		private DataContext our_shop;
+		private DataLayerAPI data;
 		private IGenerator generator;
 	
 		[TestInitialize]
 		public void Initialize()
 		{
-			our_shop = new DataContext();
-			service = new DataService(new DataRepository(our_shop));
+			data = DataLayerAPI.GetDataRepository();
+			service = new DataService(data);
 			generator = new FixedGenerator();
-			generator.GenerateData(our_shop);
+			generator.GenerateData(data);
 		}
 
         [TestMethod]
 		public void AddAndGetClient()
 		{
-			Client c = new Client("Ula", "Brzydula", "6");
 			Assert.AreEqual(service.GetAllClientsNumber(), 4);
-			service.AddClient(c);
+			service.AddClient("Ula", "Brzydula", 6);
 			Assert.AreEqual(service.GetAllClientsNumber(), 5);
-			Client temp = service.GetClientById("6");
-			Assert.AreEqual(temp, c);
+			String temp = service.GetClientFirstName(6);
+			Assert.AreEqual(temp, "Ula");
 		}
 
 		[TestMethod]
 		public void UpdateClientInfo()
 		{
 
-			Assert.AreEqual("James", service.GetClientById("1").FirstName);
-			service.UpdateClientInfo("Alex", "Bond ", "1");
-			Assert.AreEqual("Alex", service.GetClientById("1").FirstName);
+			Assert.AreEqual("James", service.GetClientFirstName(1));
+			service.UpdateClientsInfo("Alex", "Bond", 1);
+			Assert.AreEqual("Alex", service.GetClientFirstName(1));
 		}
 
 		[TestMethod]
 		public void DeleteClientCorrect()
 		{
-
-			service.DeleteClient("1");
+			service.DeleteClient(1);
 			Assert.AreEqual(service.GetAllClientsNumber(), 3);
-
-
 		}
 
 		[TestMethod]
-		[ExpectedException(typeof(System.Exception))]
 		public void DeleteClientException()
 		{
-
-			service.DeleteClient("LKSDMV");
-			Assert.AreEqual(service.GetAllClientsNumber(), 3);
-
+			Assert.ThrowsException<Exception>(() => service.DeleteClient(1253));
 		}
 
 		[TestMethod]
 		public void ClothesTest()
 		{
-			Clothes clothes = new Clothes(99, 40, ClothesType.tshirt);
-			service.AddClothes(clothes);
-			Assert.AreEqual(clothes, service.GetClothesById(99));
+			service.AddClothes(99, 40, "tshirt");
+			Assert.AreEqual("tshirt", service.GetClothes(99));
 			service.DeleteClothes(99);
 		}
 
@@ -78,13 +70,9 @@ namespace Tests
 
 
 		[TestMethod]
-		[ExpectedException(typeof(System.Exception))]
 		public void DeleteClothesException()
 		{
-
-			service.DeleteClothes(999999);
-			Assert.AreEqual(service.GetNumberOfClothes(), 1);
-
+			Assert.ThrowsException<Exception>(() => service.DeleteClothes(999999));
 		}
 
 
@@ -92,33 +80,15 @@ namespace Tests
 		[TestMethod]
 		public void EventCorrectDeleteTests()
 		{
-			Client temp = service.GetClientById("1");
 			DateTime now = DateTime.Now;
-			Event b = new BuyingEvent("b1", service.GetState(), temp, now);
-			service.AddEvent(b);
+			service.AddNewBatchEvent(1, 1, 1, now);
 			Assert.AreEqual(service.GetAllEventsNumber(), 1);
-			service.DeleteEvent("b1");
+			service.DeleteEvent(1);
 			Assert.AreEqual(service.GetAllEventsNumber(), 0);
-
 		}
+		
 
-		[TestMethod]
-		public void EventUserBuyingTests()
-		{
-
-			DateTime now = DateTime.Now;
-			service.BuyClothes("1", 1, now, 5);
-			Assert.AreEqual(service.GetAllEventsNumber(), 1);
-			Assert.AreEqual(5, service.GetStateOfClothes(1));
-			IEnumerable<Event> lista = service.GetEventsForTheClient("1");
-			Assert.AreEqual(1, lista.Count());
-			service.BuyClothes("1", 2, now, 4);
-			lista = service.GetEventsForTheClient("1");
-			Assert.AreEqual(2, lista.Count());
-
-		}
-
-		[TestMethod]
+		/*[TestMethod]
 		public void BuyClothesTest()
 		{
 			Client client = new Client("Ann", "Smith", "5");
@@ -143,27 +113,15 @@ namespace Tests
 			int stateThen = service.GetStateOfClothes(4);
 			service.NewBatch("5", 4, now, 99);
 			Assert.AreEqual(stateThen + 99, service.GetStateOfClothes(4));
-		}
+		}*/
 
 		[TestMethod]
 		public void EventUserNewBatchTests()
 		{
-
 			DateTime now = DateTime.Now;
-			service.NewBatch("1", 1, now, 5);
+			service.AddNewBatchEvent(1, 1, 2, now);
 			Assert.AreEqual(service.GetAllEventsNumber(), 1);
-			Assert.AreEqual(15, service.GetStateOfClothes(1));
-			IEnumerable<Event> lista = service.GetEventsForTheClient("1");
-			Assert.AreEqual(1, lista.Count());
-
-
+			Assert.AreEqual("hoodie", service.GetClothes(1));
 		}
-
-
-
-
-
-
-
-	}
+    }
 }

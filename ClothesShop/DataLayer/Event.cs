@@ -21,7 +21,7 @@ namespace DataLayer.API
 
         Event(int id, State state, Client client, DateTime dateTime)
         {
-            this.Id = id;
+            Id = id;
             this.state = state;
             this.client = client;
             this.dateTime = dateTime;
