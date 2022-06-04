@@ -35,7 +35,7 @@ namespace Services
         {
             using (DataClasses1DataContext context = new DataClasses1DataContext())
             {
-                Clients myclient = context.Clients.SingleOrDefault(client => client.id == client_id); 
+                Clients myclient = context.Clients.SingleOrDefault(client => client.id == client_id); //tu patrzyłam na różne metody żeby zmienić ale tylko ta się nadaje
                 context.Clients.DeleteOnSubmit(myclient);
                 context.SubmitChanges();
                 return true;
@@ -69,19 +69,18 @@ namespace Services
             }
         }
 
-        static public IEnumerable<Clients> GetClientByName(string client_name)
+        static public Clients GetCustomerByName(string client_name)
         {
             using (DataClasses1DataContext context = new DataClasses1DataContext())
             {
-                List<Clients> result = new List<Clients>();
-                foreach (Clients client in context.Clients)
+                foreach (Clients client in context.Clients.ToList())
                 {
-                    if (client.name.Equals(client_name))
+                    if (client.name == client_name)
                     {
-                        result.Add(client);
+                        return client;
                     }
                 }
-                return result;
+                return null;
             }
         }
 
