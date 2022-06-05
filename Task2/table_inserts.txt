@@ -1,0 +1,30 @@
+-- CLIENTS inserts
+insert into clients(id, name) values (1, 'Piotr Nowakowski');
+insert into clients(id, name) values (2, 'Michał Winiarski');
+insert into clients(id, name) values (3, 'Dawid Konarski');
+insert into clients(id, name) values (6, 'Bartosz Kurek');
+insert into clients(id, name) values (13, 'Michał Kubiak');
+insert into clients(id, name) values (17, 'Paweł Zatorski');
+insert into clients(id, name) values (90, 'Stephane Antiga');
+insert into clients(id, name) values (91, 'Vital Heynen');
+
+-- CLOTHES inserts
+insert into clothes(id, price, type) values (1, 350, 'shoes');
+insert into clothes(id, price, type) values (2, 500, 'shoes');
+insert into clothes(id, price, type) values (11, 30, 'socks');
+insert into clothes(id, price, type) values (12, 16, 'socks');
+insert into clothes(id, price, type) values (21, 90, 'shorts');
+insert into clothes(id, price, type) values (31, 150, 'tshirt');
+
+-- EVENTS inserts
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (1, '2022-05-31', 1, 1, 1, 1);
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (2, '2022-05-31', 2, 12, 5, 1);
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (3, '2022-06-01', 90, 21, 20, 0);
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (4, '2022-06-01', 91, 31, 24, 0);
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (5, '2022-06-02', 13, 2, 1, 1);
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (6, '2022-06-02', 17, 2, 1, 1);
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (7, '2022-06-03', 6, 11, 3, 1);
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (8, '2022-06-03', 13, 21, 2, 1);
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (9, '2022-06-04', 90, 12, 80, 0);
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (10, '2022-06-04', 6, 2, 2, 1);
+insert into events(id, date, client_id, clothes_id, amount, is_buying) values (11, '2022-06-34', 17, 12, 3, 1);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Dataa;
 
 namespace Services
@@ -201,17 +200,72 @@ namespace Services
             }
         }
 
+        static public IEnumerable<Events> GetEventsByClientName(string client_name)
+        {
+            using (DataClasses1DataContext context = new DataClasses1DataContext())
+            {
+                Clients client = (Clients)ClientCRUD.GetClientByName(client_name);
 
-        //not finished yet
+                List<Events> events = new List<Events>();
+                foreach (Events ev in context.Events.ToList())
+                {
+                    if (ev.client_id == client.id)
+                    {
+                        events.Add(ev);
+                    }
+                }
+                return events;
+            }
+        }
 
+        static public List<Dictionary<string, string>> GetEventsInfoforClient(string client_name)
 
+        {
+            List<Dictionary<string, string>> returnList = new List<Dictionary<string, string>>();
+            List<Events> tempE = GetEventsByClientName(client_name).ToList();
+            foreach (Events e in tempE)
+            {
+                Dictionary<string, string> temp = new Dictionary<string, string>();
+                temp.Add("id", e.id.ToString());
+                temp.Add("date", e.date.ToString());
+                temp.Add("client_id", e.client_id.ToString());
+                temp.Add("clothes_id", e.clothes_id.ToString());
+                temp.Add("amount", e.amount.ToString());
+                temp.Add("is_buying", e.is_buying.ToString());
 
+                returnList.Add(temp);
+            }
+            return returnList;
+        }
 
+        static public IEnumerable<Events> GetEventsByAmount(int event_amount)
+        {
+            using (DataClasses1DataContext context = new DataClasses1DataContext())
+            {
+                List<Events> result = new List<Events>();
+                foreach (Events myevent in context.Events)
+                {
+                    if (myevent.amount.Equals(event_amount))
+                    {
+                        result.Add(myevent);
+                    }
+                }
+                return result;
+            }
+        }
 
+        static public bool BuyClothes(int event_id, int clothes_id, int client_id, int amount)
+        {
+            using (DataClasses1DataContext context = new DataClasses1DataContext())
+            {
+                if (ClothesCRUD.GetClothes(clothes_id) != null && ClientCRUD.GetClient(client_id) != null)
+                {
 
-
-
-
-
+                    addEvent(event_id, DateTime.Today, ClientCRUD.GetClient(client_id).id, ClothesCRUD.GetClothes(clothes_id).id, amount, true);
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
