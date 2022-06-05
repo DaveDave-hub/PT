@@ -23,30 +23,41 @@ namespace DataTests
 
 
                Clothes pants = new Clothes();
-                pants.id = 2;
-                pants.price = 2;
-                pants.type = "pants";
-
-
+                pants.id = 41;
+                pants.price = 70;
+                pants.type = "cap";
 
                 database.Clothes.InsertOnSubmit(pants);
                 database.SubmitChanges();
 
+                Clothes mypants = database.Clothes.FirstOrDefault(panst => panst.id.Equals(41));
 
-
-
-
-                Clothes mypants = database.Clothes.FirstOrDefault(doonut => doonut.id.Equals(2));
-
-                Assert.AreEqual(mypants.id, 2);
-                Assert.AreEqual(mypants.type, "pants");
-                Assert.AreEqual(mypants.price, 2);
-
-
+                Assert.AreEqual(mypants.id, 41);
+                Assert.AreEqual(mypants.type, "cap");
+                Assert.AreEqual(mypants.price, 70);
 
                 database.Clothes.DeleteOnSubmit(pants);
                 database.SubmitChanges();
             }
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(System.Data.SqlClient.SqlException))]
+        public void ConnectingToNonExsistingDB()
+        {
+            using (DataClasses1DataContext fake = new DataClasses1DataContext("Data Source = DESKTOP-H5C7HVQ; Initial Catalog = Fakeee; Integrated Security = True"))
+            {
+
+                Clothes clothes = new Clothes();
+                clothes.id = 12345;
+                clothes.price = 1000;
+                clothes.type = "top";
+
+                fake.Clothes.InsertOnSubmit(clothes);
+                fake.SubmitChanges();
+            }
+
         }
     }
 }

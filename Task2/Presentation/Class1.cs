@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dataa
+namespace Presentation
 {
     public class Class1
     {
