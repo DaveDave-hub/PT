@@ -142,9 +142,21 @@ namespace Services
             }
         }
 
-
-
-
+        static public IEnumerable<Clothes> GetClothesByPrice(decimal clothes_price)
+        {
+            using (DataClasses1DataContext context = new DataClasses1DataContext())
+            {
+                List<Clothes> result = new List<Clothes>();
+                foreach (Clothes clothes in context.Clothes)
+                {
+                    if (clothes.price.Equals(clothes_price))
+                    {
+                        result.Add(clothes);
+                    }
+                }
+                return result;
+            }
+        }
     }
 }
 
