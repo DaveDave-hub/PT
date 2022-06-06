@@ -7,19 +7,19 @@
         mc:Ignorable="d"
         Title="AddClothes" Height="450" Width="800">
     <Grid>
-        <TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="&#x9;CREATE A NEW CLOTHE" VerticalAlignment="Top" Height="20" Width="234"/>
-        <TextBlock HorizontalAlignment="Center" Margin="266,36,270,0" TextWrapping="Wrap" Text="Price" Height="15" VerticalAlignment="Top" Width="43"/>
+        <TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="&#x9;CREATE A NEW CLOTHE" VerticalAlignment="Top" Height="20" Width="234" Margin="0,42,0,0"/>
+        <TextBlock HorizontalAlignment="Left" Margin="139,108,0,0" TextWrapping="Wrap" Text="Price" Height="15" VerticalAlignment="Top" Width="43"/>
 
-        <TextBox  x:Name="CPrice" HorizontalAlignment="Center" Height="26" Margin="102,51,120,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="357" >
+        <TextBox  x:Name="CPrice" HorizontalAlignment="Left" Height="26" Margin="212,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="357" >
             <TextBox.Text>
                 <Binding Path="NewClothes.price"  Mode="TwoWay">
                 </Binding>
             </TextBox.Text>
         </TextBox>
 
-        <TextBlock HorizontalAlignment="Center" Margin="266,90,257,0" TextWrapping="Wrap" Text="Type" Height="20" VerticalAlignment="Top" Width="56"/>
+        <TextBlock HorizontalAlignment="Left" Margin="139,165,0,0" TextWrapping="Wrap" Text="Type" Height="20" VerticalAlignment="Top" Width="56"/>
 
-        <TextBox x:Name="CType" HorizontalAlignment="Center" Height="26" Margin="102,110,120,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="357">
+        <TextBox x:Name="CType" HorizontalAlignment="Left" Height="26" Margin="212,162,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="357">
             <TextBox.Text>
                 <Binding Path="NewClothes.type"  Mode="TwoWay"/>
             </TextBox.Text>
@@ -27,16 +27,16 @@
 
 
 
-        <TextBlock HorizontalAlignment="Left" Margin="382,141,0,0" TextWrapping="Wrap" Text="ID" Height="14" VerticalAlignment="Top" Width="46"/>
+        <TextBlock HorizontalAlignment="Left" Margin="144,231,0,0" TextWrapping="Wrap" Text="ID" Height="14" VerticalAlignment="Top" Width="46"/>
 
-        <TextBox x:Name="CId" HorizontalAlignment="Left" Height="25" Margin="212,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="358">
+        <TextBox x:Name="CId" HorizontalAlignment="Left" Height="25" Margin="212,226,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="358">
             <TextBox.Text>
                 <Binding Path="NewClothes.id"  Mode="TwoWay"/>
             </TextBox.Text>
         </TextBox>
 
 
-        <Button Content="Confirm" HorizontalAlignment="Left" Margin="354,217,0,0" VerticalAlignment="Top" Width="74"  Command="{Binding AddClothesCommand}">
+        <Button Content="Confirm" HorizontalAlignment="Left" Margin="354,301,0,0" VerticalAlignment="Top" Width="74"  Command="{Binding AddClothesCommand}">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="False"/>

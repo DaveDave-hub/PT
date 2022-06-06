@@ -7,13 +7,12 @@
         mc:Ignorable="d"
         Title="EditClothes" Height="450" Width="800">
     <Grid>
-        <TextBlock HorizontalAlignment="Center"  Text="Edit your Clothe" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="110" Margin="237,0,232,0"/>
-        <TextBlock HorizontalAlignment="Center" Margin="278,48,258,0" TextWrapping="Wrap" Text="ID" Height="15" VerticalAlignment="Top" Width="43"/>
+        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Height="20" Width="110" Margin="378,44,0,0"><Run Language="pl-pl" Text="EDIT YOUR CLOTHE"/><LineBreak/><Run Language="pl-pl"/></TextBlock>
 
-        
-        <TextBlock HorizontalAlignment="Center" Margin="278,102,245,0" TextWrapping="Wrap" Text="Price" Height="20" VerticalAlignment="Top" Width="56"/>
 
-        <TextBox x:Name="ClPrice" HorizontalAlignment="Center" Height="26" Margin="114,122,108,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="357">
+        <TextBlock HorizontalAlignment="Left" Margin="195,189,0,0" TextWrapping="Wrap" Text="Price" Height="20" VerticalAlignment="Top" Width="56"/>
+
+        <TextBox x:Name="ClPrice" HorizontalAlignment="Left" Height="26" Margin="260,186,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="357">
             <TextBox.Text>
                 <Binding Path="CurrentClothes.price"  Mode="TwoWay"/>
             </TextBox.Text>
@@ -21,17 +20,17 @@
 
 
 
-        <TextBlock HorizontalAlignment="Center" Margin="211,165,322,0" TextWrapping="Wrap" Text="Type" Height="14" VerticalAlignment="Top" Width="46"/>
+        <TextBlock HorizontalAlignment="Left" Margin="195,246,0,0" TextWrapping="Wrap" Text="Type" Height="14" VerticalAlignment="Top" Width="46"/>
 
-        <TextBox x:Name="ClType" HorizontalAlignment="Center" Height="24" Margin="196,184,322,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="61">
+        <TextBox x:Name="ClType" HorizontalAlignment="Left" Height="24" Margin="260,238,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="357">
             <TextBox.Text>
                 <Binding Path="CurrentClothes.type"  Mode="TwoWay"/>
             </TextBox.Text>
         </TextBox>
 
 
-        <TextBlock HorizontalAlignment="Center" Margin="40,23,494,0" TextWrapping="Wrap" Text="ID" Height="14" VerticalAlignment="Top" Width="45"/>
-        <TextBox  x:Name="ClID" HorizontalAlignment="Center" Height="24" Margin="25,42,494,0"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="60" IsReadOnly="True" Text="{Binding CurrentClothes.id}" />
+        <TextBlock HorizontalAlignment="Left" Margin="195,144,0,0" TextWrapping="Wrap" Text="ID" Height="14" VerticalAlignment="Top" Width="45"/>
+        <TextBox  x:Name="ClID" HorizontalAlignment="Left" Height="24" Margin="260,140,0,0"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="357" IsReadOnly="True" Text="{Binding CurrentClothes.id}" />
 
         <Button Content="Confirm" Margin="396,0,0,63"  Command="{Binding EditClothesCommand}" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="75">
 

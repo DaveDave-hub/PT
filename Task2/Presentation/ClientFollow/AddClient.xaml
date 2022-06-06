@@ -7,23 +7,23 @@
         mc:Ignorable="d"
         Title="AddClient" Height="450" Width="800">
     <Grid>
-        <TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="&#x9;CREATE A NEW CLIENT" VerticalAlignment="Top" Height="20" Width="234"/>
-        <TextBlock HorizontalAlignment="Center" Margin="349,36,364,0" TextWrapping="Wrap" Text="Name" Height="15" VerticalAlignment="Top" Width="79"/>
+        <TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" Text="&#x9;CREATE A NEW CLIENT" VerticalAlignment="Top" Height="20" Width="234" Margin="0,24,0,0"/>
+        <TextBlock HorizontalAlignment="Left" Margin="155,128,0,0" TextWrapping="Wrap" Text="Name" Height="15" VerticalAlignment="Top" Width="78"/>
 
-        <TextBox  x:Name="ClientName" HorizontalAlignment="Center" Height="26" Margin="102,51,120,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="357" >
+        <TextBox  x:Name="ClientName" HorizontalAlignment="Left" Height="26" Margin="207,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="357" >
             <TextBox.Text>
                 <Binding Path="NewClient.name"  Mode="TwoWay"/>
             </TextBox.Text>
         </TextBox>
-        <TextBlock HorizontalAlignment="Center" Margin="264,154,270,0" TextWrapping="Wrap" Text="ID" Height="14" VerticalAlignment="Top" Width="45"/>
-        <TextBox  x:Name="ClientID" HorizontalAlignment="Center" Height="24" Margin="249,173,270,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="60">
+        <TextBlock HorizontalAlignment="Left" Margin="162,177,0,0" TextWrapping="Wrap" Text="ID" Height="14" VerticalAlignment="Top" Width="45"/>
+        <TextBox  x:Name="ClientID" HorizontalAlignment="Left" Height="24" Margin="207,173,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="357">
             <TextBox.Text>
                 <Binding Path="NewClient.id"  Mode="TwoWay"/>
             </TextBox.Text>
         </TextBox>
 
 
-        <Button Content="Confirm" HorizontalAlignment="Left" Margin="348,230,0,0" VerticalAlignment="Top" Width="75"  Command="{Binding AddClientCommand}">
+        <Button Content="Confirm" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Width="76"  Command="{Binding AddClientCommand}">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="False"/>

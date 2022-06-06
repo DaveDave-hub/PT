@@ -7,25 +7,29 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ComboBox x:Name="Cname" Margin="10,10,484,379" ItemsSource="{Binding Path=Clothes}" DisplayMemberPath="id" Grid.Row="1"
+        <Grid.Background>
+            <ImageBrush ImageSource="1.jpg"  Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <ComboBox x:Name="Cname" Margin="247,114,247,295" ItemsSource="{Binding Path=Clothes}" DisplayMemberPath="id"
                   SelectedItem="{Binding Path=CurrentClothes, Mode=TwoWay}"/>
-        <TextBlock FontSize="16"  Margin="436,29,52,366"><Run Text="Click on clothe to display its details:"/></TextBlock>
-        <StackPanel Orientation="Vertical" Margin="430,56,23,272">
+        <TextBlock FontSize="16"  Margin="264,80,224,316" Foreground="White"><Run Text="Click on clothe to display its details:"/></TextBlock>
+        <StackPanel Orientation="Vertical" Margin="247,196,206,132">
 
             <TextBox IsReadOnly="True" Text="{Binding CurrentClothes.id}" />
             <TextBox IsReadOnly="True" Text="{Binding CurrentClothes.price}" />
             <TextBox IsReadOnly="True" Text="{Binding CurrentClothes.type}" />
         </StackPanel>
 
-        <StackPanel Margin="365,50,324,299">
-            <TextBlock TextWrapping="Wrap" Text="ID" Height="18"/>
-            <TextBlock TextWrapping="Wrap" Text="Price" Height="19"/>
-            <TextBlock TextWrapping="Wrap" Text="Type" Height="19"/>
+        <StackPanel Margin="191,196,498,153">
+            <TextBlock TextWrapping="Wrap" Foreground="White" Text="ID" Height="18"/>
+            <TextBlock TextWrapping="Wrap" Foreground="White" Text="Price" Height="19"/>
+            <TextBlock TextWrapping="Wrap" Foreground="White" Text="Type" Height="19"/>
         </StackPanel>
 
-        <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="418,341,0,0" Command="{Binding AddClothesCommand}"/>
-        <Button Content="Refresh" HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top" Width="57" Command="{Binding RefreshClothesCommand}"/>
-        <Button Content="Edit" HorizontalAlignment="Left" Margin="543,341,0,0" VerticalAlignment="Top" Width="75" Command="{Binding EditClothesCommand}">
+        <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="498,402,0,0" Command="{Binding AddClothesCommand}"/>
+        <Button Content="Refresh" HorizontalAlignment="Left" Margin="592,125,0,0" VerticalAlignment="Top" Width="57" Command="{Binding RefreshClothesCommand}"/>
+        <Button Content="Edit" HorizontalAlignment="Left" Margin="604,402,0,0" VerticalAlignment="Top" Width="74" Command="{Binding EditClothesCommand}">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="True"/>
@@ -37,7 +41,7 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button Content="Delete" HorizontalAlignment="Left" Margin="673,341,0,0" VerticalAlignment="Top"  Command="{Binding DeleteClothesCommand}" Width="75">
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="702,402,0,0" VerticalAlignment="Top"  Command="{Binding DeleteClothesCommand}" Width="75">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="IsEnabled" Value="True"/>

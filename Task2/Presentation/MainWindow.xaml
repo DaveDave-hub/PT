@@ -10,9 +10,12 @@
     <Window.Resources>
         <DataTemplate x:Key="Clothes">
             <local:Clothes/>
-            </DataTemplate>
+        </DataTemplate>
         <DataTemplate x:Key="Client">
             <local:Client/>
+        </DataTemplate>
+        <DataTemplate x:Key="BuyClothes">
+            <local:BuyClothes/>
         </DataTemplate>
     </Window.Resources>
     <StackPanel>
@@ -20,8 +23,11 @@
             <TabItem Header="Clothes List">
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource Clothes}" Margin="0,-1,0,-25" />
             </TabItem>
-            <TabItem Header="Customer List">
+            <TabItem Header="Clients List">
                 <ContentControl Content="{Binding}" ContentTemplate="{StaticResource Client}" Margin="0,-1,0,-25" />
+            </TabItem>
+            <TabItem Header="Buy Clothes">
+                <ContentControl Content="{Binding}" ContentTemplate="{StaticResource BuyClothes}" Margin="0,-1,0,-25" />
             </TabItem>
         </TabControl>
     </StackPanel>
