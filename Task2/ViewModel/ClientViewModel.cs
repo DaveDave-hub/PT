@@ -6,6 +6,7 @@ using Presentation.ViewModel.AdditionalInterfaces;
 using Services;
 using System.Linq;
 using System.Threading.Tasks;
+using Dataa;
 
 namespace Presentation.ViewModel
 {
@@ -190,7 +191,7 @@ namespace Presentation.ViewModel
 
         public IEnumerable<EventModel> GetEventsforClientModelsConverter(int client_id)
         {
-            List<Dictionary<string, string>> retrived = EventCRUD.GetEventsByClient(client_id);
+            List<Dictionary<string, string>> retrived = (List<Dictionary<string, string>>)EventCRUD.GetEventsByClient(client_id);
             List<EventModel> temp = new List<EventModel>();
 
             foreach (Dictionary<string, string> dict in retrived)
