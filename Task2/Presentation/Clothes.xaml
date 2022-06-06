@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="Presentation.Clothes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Presentation"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <ComboBox x:Name="Cname" Margin="10,10,484,379" ItemsSource="{Binding Path=Clothes}" DisplayMemberPath="id" Grid.Row="1"
+                  SelectedItem="{Binding Path=CurrentClothes, Mode=TwoWay}"/>
+        <TextBlock FontSize="16"  Margin="436,29,52,366"><Run Text="Click on clothe to display its details:"/></TextBlock>
+        <StackPanel Orientation="Vertical" Margin="430,56,23,272">
+
+            <TextBox IsReadOnly="True" Text="{Binding CurrentClothes.id}" />
+            <TextBox IsReadOnly="True" Text="{Binding CurrentClothes.price}" />
+            <TextBox IsReadOnly="True" Text="{Binding CurrentClothes.type}" />
+        </StackPanel>
+
+        <StackPanel Margin="365,50,324,299">
+            <TextBlock TextWrapping="Wrap" Text="ID" Height="18"/>
+            <TextBlock TextWrapping="Wrap" Text="Price" Height="19"/>
+            <TextBlock TextWrapping="Wrap" Text="Type" Height="19"/>
+        </StackPanel>
+
+        <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="418,341,0,0" Command="{Binding AddClothesCommand}"/>
+        <Button Content="Refresh" HorizontalAlignment="Left" Margin="346,10,0,0" VerticalAlignment="Top" Width="57" Command="{Binding RefreshClothesCommand}"/>
+        <Button Content="Edit" HorizontalAlignment="Left" Margin="543,341,0,0" VerticalAlignment="Top" Width="75" Command="{Binding EditClothesCommand}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="IsEnabled" Value="True"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentClothes.id}" Value="{x:Null}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <Button Content="Delete" HorizontalAlignment="Left" Margin="673,341,0,0" VerticalAlignment="Top"  Command="{Binding DeleteClothesCommand}" Width="75">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="IsEnabled" Value="True"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=CurrentClothes.id}" Value="{x:Null}">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+    </Grid>
+</UserControl>

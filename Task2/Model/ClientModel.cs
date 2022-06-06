@@ -9,13 +9,14 @@ namespace Presentation.Model
         {
         }
 
-        public int customer_Id { get; set; }
-        public string customer_Name { get; set; }  
+        public int id { get; set; }
+        public string name { get; set; }
 
         public void Converter(Dictionary<String, String> customerInfo)
         {
-            customer_Id = Int32.Parse(customerInfo["id"]);
-            customer_Name = customerInfo["name"];
+            id = Int32.Parse(customerInfo["id"]);
+            name = customerInfo["name"];
         }
+
     }
 }
