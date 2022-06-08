@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Dataa
+namespace Data
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;

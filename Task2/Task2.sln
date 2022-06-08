@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{EA0EAE54-8498-4677-9020-F27AC653E73E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dataa", "Dataa\Dataa.csproj", "{386E89E4-1517-44F3-99D0-DFDACF13EE4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{386E89E4-1517-44F3-99D0-DFDACF13EE4B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTest", "DataTest\DataTest.csproj", "{4BF22DF2-D5D9-4582-80E0-E03D3FEBFAFD}"
 EndProject

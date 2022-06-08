@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Data;
+using Data.DataRepository;
 using Presentation.Model;
 using Presentation.ViewModel.AdditionalInterfaces;
 using Presentation.ViewModel;
@@ -33,7 +35,7 @@ namespace Presentation.ViewModel
         public void AddClient()
         {
 
-            bool added = ClientCRUD.addClient(newClient.id, newClient.name);
+            bool added = ClientCRUD.AddClient(newClient.id, newClient.name);
             if (added)
             {
 
@@ -50,7 +52,7 @@ namespace Presentation.ViewModel
         public void EditClient()
         {
 
-            bool editedN = ClientCRUD.updateName(currentClient.id, currentClient.name);
+            bool editedN = ClientCRUD.UpdateName(currentClient.id, currentClient.name);
 
             if (editedN)
             {

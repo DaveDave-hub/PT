@@ -6,6 +6,8 @@ using Presentation.ViewModel.AdditionalInterfaces;
 using Services;
 using System.Linq;
 using System.Threading.Tasks;
+using Data;
+using Data.DataRepository;
 using Dataa;
 
 namespace Presentation.ViewModel
@@ -166,7 +168,7 @@ namespace Presentation.ViewModel
 
         private void DeleteClient()
         {
-            ClientCRUD.deleteClient(CurrentClient.id);
+            ClientCRUD.DeleteClient(CurrentClient.id);
             RefreshClients();
         }
 
