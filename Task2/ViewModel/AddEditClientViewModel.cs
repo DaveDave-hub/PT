@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Data;
 using Data.DataRepository;
+using Model;
 using Presentation.Model;
 using Presentation.ViewModel.AdditionalInterfaces;
 using Presentation.ViewModel;
@@ -17,7 +18,7 @@ namespace Presentation.ViewModel
             AddClientCommand = new ModelCommand(AddClient);
             EditClientCommand = new ModelCommand(EditClient);
             currentClient = ClientViewModel.RetriveClient();
-            newClient = new ClientModel();
+            newClient = new ClientModelData();
 
         }
 
@@ -35,7 +36,7 @@ namespace Presentation.ViewModel
         public void AddClient()
         {
 
-            bool added = ClientCRUD.AddClient(newClient.id, newClient.name);
+            bool added = ClientCRUD.AddClient(newClient.Id, newClient.Name);
             if (added)
             {
 
@@ -52,7 +53,7 @@ namespace Presentation.ViewModel
         public void EditClient()
         {
 
-            bool editedN = ClientCRUD.UpdateName(currentClient.id, currentClient.name);
+            bool editedN = ClientCRUD.UpdateName(currentClient.Id, currentClient.Name);
 
             if (editedN)
             {
@@ -66,8 +67,8 @@ namespace Presentation.ViewModel
 
         }
 
-        private ClientModel currentClient;
-        public ClientModel CurrentClient
+        private ClientModelData currentClient;
+        public ClientModelData CurrentClient
         {
             get
             {
@@ -83,8 +84,8 @@ namespace Presentation.ViewModel
 
         }
 
-        private ClientModel newClient;
-        public ClientModel NewClient
+        private ClientModelData newClient;
+        public ClientModelData NewClient
         {
             get
             {

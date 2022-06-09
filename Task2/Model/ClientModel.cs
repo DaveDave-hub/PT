@@ -1,22 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Model.API;
+using Services;
+using Services.API;
 
-namespace Presentation.Model
+namespace Model;
+
+public class ClientModel : IClientModel
 {
-    public class ClientModel
+    public IClientLogic Logic { get; }
+
+    public ClientModel(IClientLogic logic = default)
     {
-        public ClientModel()
+        Logic = logic ?? new ClientLogic();
+    }
+
+    public IEnumerable<IClientModelData> Clients
+    {
+        get
         {
+            List<IClientModelData> clients = new();
+            foreach (var c in Logic.GetAllClients())
+            {
+                clients.Add(new ClientModelData(c.Id, c.Name));
+            }
+            return clients;
         }
+    }
 
-        public int id { get; set; }
-        public string name { get; set; }
+    public bool Add(int id, string name)
+    {
+        return Logic.AddClient(id, name);
+    }
 
-        public void Converter(Dictionary<String, String> customerInfo)
-        {
-            id = Int32.Parse(customerInfo["id"]);
-            name = customerInfo["name"];
-        }
+    public bool Delete(int id)
+    {
+        return Logic.DeleteClient(id);
+    }
 
+    public bool Update(int id, string name)
+    {
+        return Logic.UpdateClient(id, name);
     }
 }

@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data;
 using Data.DataRepository;
+using Model;
 using Presentation.Model;
 using Presentation.ViewModel.AdditionalInterfaces;
 using Services;
@@ -30,7 +31,7 @@ namespace Presentation.ViewModel
         {
             bool ordered = false;
             if (this.currentClothes != null && this.currentClient != null)
-                ordered = EventCRUD.BuyClothes(NewOrderID, currentClothes.id, currentClient.id, newQuantity);
+                ordered = EventCRUD.BuyClothes(NewOrderID, currentClothes.id, currentClient.Id, newQuantity);
 
             if (ordered)
             {
@@ -70,8 +71,8 @@ namespace Presentation.ViewModel
             Task.Run(() => this.Clients = GetClientsModelsConverter());
         }
 
-        private IEnumerable<ClientModel> clients;
-        public IEnumerable<ClientModel> Clients
+        private IEnumerable<ClientModelData> clients;
+        public IEnumerable<ClientModelData> Clients
         {
             get => clients;
 
@@ -83,8 +84,8 @@ namespace Presentation.ViewModel
         }
 
         /*Master detail - displays events for selected client*/
-        private ClientModel currentClient;
-        public ClientModel CurrentClient
+        private ClientModelData currentClient;
+        public ClientModelData CurrentClient
         {
             get
             {
@@ -186,14 +187,14 @@ namespace Presentation.ViewModel
             }
             return temp;
         }
-        public IEnumerable<ClientModel> GetClientsModelsConverter()
+        public IEnumerable<ClientModelData> GetClientsModelsConverter()
         {
             List<Dictionary<string, string>> retrived = ClientCRUD.GetClientsInfo();
-            List<ClientModel> temp = new List<ClientModel>();
+            List<ClientModelData> temp = new List<ClientModelData>();
 
             foreach (Dictionary<string, string> dict in retrived)
             {
-                ClientModel t = new ClientModel();
+                ClientModelData t = new ClientModelData();
                 t.Converter(dict);
                 temp.Add(t);
             }

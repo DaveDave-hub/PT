@@ -9,14 +9,19 @@ using System.Threading.Tasks;
 using Data;
 using Data.DataRepository;
 using Dataa;
+using Model;
+using Model.API;
 
 namespace Presentation.ViewModel
 {
     public class ClientViewModel : BaseViewModel
     {
-        public ClientViewModel()
+        private IClientModel model;
+        
+        public ClientViewModel(IClientModel model = default)
         {
-
+            this.model = model ??  new ClientModel();
+            
             AddClientCommand = new ModelCommand(AddClient);
             EditClientCommand = new ModelCommand(EditClient);
             DeleteClientCommand = new ModelCommand(DeleteClient);
@@ -26,11 +31,11 @@ namespace Presentation.ViewModel
 
         private void RefreshClients()
         {
-            Task.Run(() => this.Clients = GetClientsModelsConverter());
+            Task.Run(() => Clients = GetClientsModelsConverter());
         }
 
-        private IEnumerable<ClientModel> clients;
-        public IEnumerable<ClientModel> Clients
+        private IEnumerable<ClientModelData> clients;
+        public IEnumerable<ClientModelData> Clients
         {
             get => clients;
 
@@ -41,8 +46,8 @@ namespace Presentation.ViewModel
             }
         }
 
-        private static ClientModel currentClient;
-        public ClientModel CurrentClient
+        private static ClientModelData currentClient;
+        public ClientModelData CurrentClient
         {
             get
             {
@@ -74,7 +79,7 @@ namespace Presentation.ViewModel
 
         {
             if (this.CurrentClient != null)
-                Task.Run(() => this.Events = GetEventsforClientModelsConverter(CurrentClient.id));
+                Task.Run(() => this.Events = GetEventsforClientModelsConverter(CurrentClient.Id));
 
         }
 
@@ -168,23 +173,23 @@ namespace Presentation.ViewModel
 
         private void DeleteClient()
         {
-            ClientCRUD.DeleteClient(CurrentClient.id);
+            ClientCRUD.DeleteClient(CurrentClient.Id);
             RefreshClients();
         }
 
-        public static ClientModel RetriveClient()
+        public static ClientModelData RetriveClient()
         {
             return currentClient;
         }
 
-        public IEnumerable<ClientModel> GetClientsModelsConverter()
+        public IEnumerable<ClientModelData> GetClientsModelsConverter()
         {
             List<Dictionary<string, string>> retrived = ClientCRUD.GetClientsInfo();
-            List<ClientModel> temp = new List<ClientModel>();
+            List<ClientModelData> temp = new List<ClientModelData>();
 
             foreach (Dictionary<string, string> dict in retrived)
             {
-                ClientModel t = new ClientModel();
+                ClientModelData t = new ClientModelData();
                 t.Converter(dict);
                 temp.Add(t);
             }
