@@ -1,25 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Model.API;
+using Services;
+using Services.API;
 
-namespace Presentation.Model
+namespace Model;
+
+public class ClothesModel
 {
-    public class ClothesModel
+    private IClothesLogic Logic { get; }
+
+    public ClothesModel(IClothesLogic logic = default)
     {
+        Logic = logic ?? new ClothesLogic();
+    }
 
-        public ClothesModel()
+    public IEnumerable<IClothesModelData> Clothes
+    {
+        get
         {
+            List<IClothesModelData> clients = new();
+            foreach (var c in Logic.GetAllClothes())
+            {
+                clients.Add(new ClothesModelData(c.Id, c.Price, c.Type));
+            }
+            return clients;
         }
+    }
 
-        public int id { get; set; }
-        public decimal price { get; set; }
-        public string type { get; set; }
+    public bool Add(int id, int price, string type)
+    {
+        return Logic.AddClothes(id, price, type);
+    }
 
-        public void Converter(Dictionary<String, String> clothesInfo)
-        {
-            id = Int32.Parse(clothesInfo["id"]);
-            price = Decimal.Parse(clothesInfo["price"]);
-            type = clothesInfo["type"];
-        }
+    public bool Delete(int id)
+    {
+        return Logic.DeleteClothes(id);
+    }
+
+    public bool Update(int id, int price, string type)
+    {
+        return Logic.UpdateClothes(id, price, type);
     }
 }

@@ -1,32 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using Model.API;
+using Services;
+using Services.API;
 
-namespace Presentation.Model
+namespace Model;
+
+public class EventModel : IEventModel
 {
-    public class EventModel
+    public IEventLogic Logic { get; }
+
+    public EventModel(IEventLogic logic = default)
     {
-        public EventModel()
-        { 
-        }
-
-        public int id { get; set; }
-        public DateTime date { get; set; }
-        public int client_id { get; set; }
-        public int clothes_id { get; set; }
-        public int amount { get; set; }
-        public Boolean is_buying { get; set; }
-
-        public void Converter(Dictionary<String, String> eventInfo)
+        Logic = logic ?? new EventLogic();
+    }
+    
+    public IEnumerable<IEventModelData> Events
+    {
+        get
         {
-            id = Int32.Parse(eventInfo["id"]);
-            date = DateTime.Parse(eventInfo["date"]);
-            client_id = Int32.Parse(eventInfo["client_id"]);
-            clothes_id = Int32.Parse(eventInfo["clothes_id"]);
-            amount = Int32.Parse(eventInfo["amount"]);
-            is_buying = Boolean.Parse(eventInfo["is_buying"]);
-
+            List<IEventModelData> events = new();
+            foreach (var e in Logic.GetAllEvents())
+            {
+                events.Add(new EventModelData(e.Id, e.Date, e.ClientId, e.ClothesId));
+            }
+            return events;
         }
+    }
 
+    public bool Add(int id, DateTime date, int clientId, int clothesId)
+    {
+        return Logic.AddEvent(id, date, clientId, clothesId);
+    }
+
+    public bool Delete(int id)
+    {
+        return Logic.DeleteEvent(id);
+    }
+
+    public bool Update(int id, DateTime date, int clientId, int clothesId)
+    {
+        return Logic.Update(id, date, clientId, clothesId);
     }
 }
