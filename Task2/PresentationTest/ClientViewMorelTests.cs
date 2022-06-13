@@ -8,7 +8,7 @@ using ViewModel;
 namespace PresentationTest;
 
 [TestClass]
-public class ClientModelTest
+public class ClientViewMorelTests
 {
 
     [TestMethod]

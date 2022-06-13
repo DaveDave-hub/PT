@@ -1,17 +1,19 @@
 ﻿using System;
 using Model;
+using Model.API;
 using ViewModel.MVVM;
 
 namespace ViewModel;
 
 public class AddEditViewModel : BaseViewModel
 {
+    private IClothesModel model;
+    
     public AddEditViewModel()
     {
         AddClothesCommand = new ModelCommand(AddClothes);
         EditClothesCommand = new ModelCommand(EditClothes);
-        currentClothes = new ClothesViewModel().RetriveClothes();
-        NewClothes = new ClothesModel();
+        model = new ClothesModel();
     }
 
     public ModelCommand AddClothesCommand
@@ -28,13 +30,13 @@ public class AddEditViewModel : BaseViewModel
     public void AddClothes()
     {
 
-        //bool added = ClothesCRUD.addClothes(newClothes.id, newClothes.price, newClothes.type);
-        //if (added)
+        bool added = model.Add(newClothes.Id, newClothes.Price, newClothes.Type);
+        if (added)
         {
 
             actionText = "Clothes Added";
         }
-        //else
+        else
         {
             actionText = "Clothes with such ID already exists in the database";
         }
@@ -45,14 +47,13 @@ public class AddEditViewModel : BaseViewModel
     public void EditClothes()
     {
 
-        //bool editedP = ClothesCRUD.updatePrice(currentClothes.id, currentClothes.price);
-        //bool editedT = ClothesCRUD.updateType(currentClothes.id, currentClothes.type);
-            
-        //if (editedP && editedT)
+        bool edited = model.Update(currentClothes.Id, currentClothes.Price, currentClothes.Type);
+
+        if (edited)
         {
             actionText = "Clothes Edited";
         }
-        //else
+        else
         {
             actionText = "Clothes with such ID already exists in the database";
         }
@@ -60,8 +61,8 @@ public class AddEditViewModel : BaseViewModel
 
     }
 
-    private ClothesModel currentClothes;
-    public ClothesModel CurrentClothes
+    private ClothesModelData currentClothes;
+    public ClothesModelData CurrentClothes
     {
         get
         {
@@ -76,8 +77,8 @@ public class AddEditViewModel : BaseViewModel
 
     }
 
-    private ClothesModel newClothes;
-    public ClothesModel NewClothes
+    private ClothesModelData newClothes;
+    public ClothesModelData NewClothes
     {
         get
         {

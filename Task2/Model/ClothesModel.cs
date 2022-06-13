@@ -5,9 +5,9 @@ using Services.API;
 
 namespace Model;
 
-public class ClothesModel
+public class ClothesModel : IClothesModel
 {
-    private IClothesLogic Logic { get; }
+    public IClothesLogic Logic { get; }
 
     public ClothesModel(IClothesLogic logic = default)
     {

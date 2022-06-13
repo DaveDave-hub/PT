@@ -28,8 +28,8 @@ public class ClothesViewModel : BaseViewModel
         OnPropertyChanged("Clothes");
     }
 
-    private IEnumerable<ClientModelData> clothes;
-    public IEnumerable<ClientModelData> Clothes
+    private IEnumerable<ClothesModelData> clothes;
+    public IEnumerable<ClothesModelData> Clothes
     {
         get
         {
@@ -44,8 +44,8 @@ public class ClothesViewModel : BaseViewModel
     }
 
 
-    private ClientModelData currentClothes;
-    public ClientModelData CurrentClothes
+    private ClothesModelData currentClothes;
+    public ClothesModelData CurrentClothes
     {
         get => currentClothes;
         set
@@ -67,8 +67,8 @@ public class ClothesViewModel : BaseViewModel
 
     private void AddClothes()
     {
-        IWindow _child = ChildWindow.Value; 
-        _child.Show();
+        IWindow child = ChildWindow.Value; 
+        child.Show();
 
     }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Model;
 using Model.API;
 using ViewModel.MVVM;
 
@@ -6,13 +7,14 @@ namespace ViewModel;
 
 public class AddEditClientViewModel : BaseViewModel
 {
+    private IClientModel model;
+    
     public AddEditClientViewModel()
     {
         AddClientCommand = new ModelCommand(AddClient);
         EditClientCommand = new ModelCommand(EditClient);
         currentClient = new ClientViewModel().RetrieveClient();
-        //newClient = new IClientModelData();
-
+        model = new ClientModel();
     }
 
     public ModelCommand AddClientCommand
@@ -29,13 +31,13 @@ public class AddEditClientViewModel : BaseViewModel
     public void AddClient()
     {
 
-        //bool added = ClientCRUD.AddClient(newClient.Id, newClient.Name);
-        //if (added)
+        bool added = model.Add(newClient.Id, newClient.Name);
+        if (added)
         {
 
             actionText = "Client Added";
         }
-        //else
+        else
         {
             actionText = "Client with such ID already exists in the database";
         }
@@ -46,13 +48,13 @@ public class AddEditClientViewModel : BaseViewModel
     public void EditClient()
     {
 
-        //bool editedN = ClientCRUD.UpdateName(currentClient.Id, currentClient.Name);
+        bool editedN = model.Update(currentClient.Id, currentClient.Name);
 
-        //if (editedN)
+        if (editedN)
         {
             actionText = "Client Edited";
         }
-        //else
+        else
         {
             actionText = "Oh nooo something went wrong";
         }

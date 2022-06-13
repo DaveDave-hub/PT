@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DataTest;
 
 [TestClass]
-public class UnitTest1
+public class ClothesDataTests
 {
     private DataClasses1DataContext database;
     private IClothesDataLayerAPI clothesDataLayerAPI;
@@ -22,13 +22,24 @@ public class UnitTest1
             
         clothesDataLayerAPI.AddClothes(0, 100, "Sweater");
     }
-
+    
     [TestMethod]
-    public void AddClothesToDatabase()
+    public void CheckIfNull()
     {
         Assert.IsNotNull(clothesDataLayerAPI.GetClothes(0));
-
+    }
+    
+    [TestMethod]
+    public void CheckDataCorrectness()
+    {
         Assert.AreEqual(100, clothesDataLayerAPI.GetClothes(0).Price);
+    }
+
+    [TestMethod]
+    public void AddToDatabase()
+    {
+        clothesDataLayerAPI.AddClothes(1, 100, "Jacket");
+        Assert.IsNotNull(clothesDataLayerAPI.GetClothes(1));
     }
 
     [TestMethod]

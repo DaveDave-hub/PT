@@ -3,29 +3,26 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Services;
 using Services.API;
+using ServicesTest.Fakes;
 
 namespace ServicesTest;
 
 [TestClass]
 public class ClientTest
 {
-    private ClientLogic clientLogic;
+    private IClientLogic clientLogic;
         
     [TestInitialize]
     public void TestInitialize()
     {
-        clientLogic = new ClientLogic();
+        clientLogic = new ClientLogicFake();
     }
         
     [TestMethod]
     public void AddAndDeleteClientTest()
     {
         Assert.IsTrue(clientLogic.AddClient(100, "NEW CLIENT"));
-        IEnumerable<IClientData> clients = clientLogic.GetAllClients();
-        Assert.AreEqual(clients.Count(), 9);
         Assert.IsTrue(clientLogic.DeleteClient(100));
-        IEnumerable<IClientData> c2 = clientLogic.GetAllClients();
-        Assert.AreEqual(c2.Count(), 8);
     }
 
     [TestMethod]
@@ -40,13 +37,16 @@ public class ClientTest
     [TestMethod]
     public void GetClientTest()
     {
+        clientLogic.AddClient(1, "Piotr Nowakowski");
         Assert.AreEqual(clientLogic.GetClient(1).Name, "Piotr Nowakowski");
     }
         
     [TestMethod]
     public void GetAllClientsTest()
     {
+        clientLogic.AddClient(1, "Piotr Nowakowski");
+        clientLogic.AddClient(2, "Piotr Nowakowski");
         IEnumerable<IClientData> clients = clientLogic.GetAllClients();
-        Assert.AreEqual(clients.Count(), 8);
+        Assert.AreEqual(clients.Count(), 2);
     }
 }

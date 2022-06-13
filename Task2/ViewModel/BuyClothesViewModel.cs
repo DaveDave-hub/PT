@@ -1,19 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Data.DataRepository;
 using Model;
+using Model.API;
 using ViewModel.MVVM;
 
 namespace ViewModel;
 
 public class BuyClothesViewModel : BaseViewModel
 {
+    private IEventModel model;
+    private IClientModel clientModel;
+    private IClothesModel clothesModel;
+    
     public BuyClothesViewModel()
     {
         RefreshClothes();
         RefreshClients();
         BuyClothesCommand = new ModelCommand(BuyClothes);
         RefreshClothesCommand = new ModelCommand(RefreshEverything);
+        model = new EventModel();
+        clientModel = new ClientModel();
+        clothesModel = new ClothesModel();
     }
 
     private void RefreshEverything()
@@ -25,28 +34,21 @@ public class BuyClothesViewModel : BaseViewModel
     private void BuyClothes()
     {
         bool ordered = false;
-        //if (this.currentClothes != null && this.currentClient != null)
-        //ordered = EventCRUD.BuyClothes(NewOrderID, currentClothes.id, currentClient.Id, newQuantity);
+        if (this.currentClothes != null && this.currentClient != null)
+            ordered = model.Add(NewOrderID,DateTime.Now,  currentClothes.Id, currentClient.Id);
 
-        if (ordered)
-        {
-            actionText = "Clothess Ordered";
-        }
-        else
-        {
-            actionText = "Something went wrong upss";
-        }
+        actionText = ordered ? "Clothes Ordered" : "Something went wrong upss";
         MessageBoxShowDelegate(ActionText);
     }
 
     private void RefreshClothes()
     {
-        Task.Run(() => Clothess = GetClothessModelsConverter());
-        OnPropertyChanged("Clothess");
+        Clothes = clothesModel.Clothes;
+        OnPropertyChanged("Clothes");
     }
 
-    private IEnumerable<ClothesModel> donuts;
-    public IEnumerable<ClothesModel> Clothess
+    private IEnumerable<IClothesModelData> donuts;
+    public IEnumerable<IClothesModelData> Clothes
     {
         get
         {
@@ -63,11 +65,11 @@ public class BuyClothesViewModel : BaseViewModel
 
     private void RefreshClients()
     {
-        Task.Run(() => Clients = GetClientsModelsConverter());
+        Clients = clientModel.Clients;
     }
 
-    private IEnumerable<ClientModelData> clients;
-    public IEnumerable<ClientModelData> Clients
+    private IEnumerable<IClientModelData> clients;
+    public IEnumerable<IClientModelData> Clients
     {
         get => clients;
 
@@ -124,8 +126,8 @@ public class BuyClothesViewModel : BaseViewModel
         }
     }
 
-    private ClothesModel currentClothes;
-    public ClothesModel CurrentClothes
+    private ClothesModelData currentClothes;
+    public ClothesModelData CurrentClothes
     {
         get
         {
@@ -168,32 +170,5 @@ public class BuyClothesViewModel : BaseViewModel
     public ModelCommand DisplayPopUpCommand { get; private set; }
 
     public Action<string> MessageBoxShowDelegate { get; set; } = x => throw new ArgumentOutOfRangeException($"The delegate {nameof(MessageBoxShowDelegate)} must be assigned by the view layer");
-
-    public IEnumerable<ClothesModel> GetClothessModelsConverter()
-    {
-        // List<Dictionary<string, string>> retrived = ClothesCRUD.GetAllClothesInfo();
-        List<ClothesModel> temp = new List<ClothesModel>();
-
-        //foreach (Dictionary<string, string> dict in retrived)
-        {
-            //ClothesModel t = new ClothesModel();
-            //t.Converter(dict);
-            //temp.Add(t);
-        }
-        return temp;
-    }
-    public IEnumerable<ClientModelData> GetClientsModelsConverter()
-    {
-        // List<Dictionary<string, string>> retrived = ClientCRUD.GetClientsInfo();
-        List<ClientModelData> temp = new List<ClientModelData>();
-
-        //foreach (Dictionary<string, string> dict in retrived)
-        {
-            //ClientModelData t = new ClientModelData();
-            //t.Converter(dict);
-            //temp.Add(t);
-        }
-        return temp;
-    }
 
 }
