@@ -1,8 +1,7 @@
-﻿namespace Data.API
+﻿namespace Data.API;
+
+public interface IClient
 {
-    public interface IClient
-    {
-        int Id { get; }
-        string Name { get; set; }
-    }
+    int Id { get; }
+    string Name { get; set; }
 }

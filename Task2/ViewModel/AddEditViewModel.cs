@@ -1,119 +1,115 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Presentation.Model;
-using Presentation.ViewModel.AdditionalInterfaces;
-using Services;
+using Model;
+using ViewModel.MVVM;
 
-namespace Presentation.ViewModel
+namespace ViewModel;
+
+public class AddEditViewModel : BaseViewModel
 {
-    public class AddEditViewModel : BaseViewModel
+    public AddEditViewModel()
     {
-        public AddEditViewModel()
+        AddClothesCommand = new ModelCommand(AddClothes);
+        EditClothesCommand = new ModelCommand(EditClothes);
+        currentClothes = new ClothesViewModel().RetriveClothes();
+        NewClothes = new ClothesModel();
+    }
+
+    public ModelCommand AddClothesCommand
+
+    {
+        get; private set;
+    }
+    public ModelCommand EditClothesCommand
+
+    {
+        get; private set;
+    }
+
+    public void AddClothes()
+    {
+
+        //bool added = ClothesCRUD.addClothes(newClothes.id, newClothes.price, newClothes.type);
+        //if (added)
         {
-            AddClothesCommand = new ModelCommand(AddClothes);
-            EditClothesCommand = new ModelCommand(EditClothes);
-            currentClothes = ClothesViewModel.RetriveClothes();
-            NewClothes = new ClothesModel();
+
+            actionText = "Clothes Added";
         }
-
-        public ModelCommand AddClothesCommand
-
+        //else
         {
-            get; private set;
+            actionText = "Clothes with such ID already exists in the database";
         }
-        public ModelCommand EditClothesCommand
+        MessageBoxShowDelegate(ActionText);
 
-        {
-            get; private set;
-        }
+    }
 
-        public void AddClothes()
-        {
+    public void EditClothes()
+    {
 
-            bool added = ClothesCRUD.addClothes(newClothes.id, newClothes.price, newClothes.type);
-            if (added)
-            {
-
-                actionText = "Clothes Added";
-            }
-            else
-            {
-                actionText = "Clothes with such ID already exists in the database";
-            }
-            MessageBoxShowDelegate(ActionText);
-
-        }
-
-        public void EditClothes()
-        {
-
-            bool editedP = ClothesCRUD.updatePrice(currentClothes.id, currentClothes.price);
-            bool editedT = ClothesCRUD.updateType(currentClothes.id, currentClothes.type);
+        //bool editedP = ClothesCRUD.updatePrice(currentClothes.id, currentClothes.price);
+        //bool editedT = ClothesCRUD.updateType(currentClothes.id, currentClothes.type);
             
-            if (editedP && editedT)
-            {
-                actionText = "Clothes Edited";
-            }
-            else
-            {
-                actionText = "Clothes with such ID already exists in the database";
-            }
-            MessageBoxShowDelegate(ActionText);
-
-        }
-
-        private ClothesModel currentClothes;
-        public ClothesModel CurrentClothes
+        //if (editedP && editedT)
         {
-            get
-            {
-                return this.currentClothes;
-            }
-            set
-            {
-                this.currentClothes = value;
-                this.OnPropertyChanged("CurrentClothes");
-
-            }
-
+            actionText = "Clothes Edited";
         }
-
-        private ClothesModel newClothes;
-        public ClothesModel NewClothes
+        //else
         {
-            get
-            {
-                return this.newClothes;
-            }
-            set
-            {
-                this.newClothes = value;
-                this.OnPropertyChanged("NewClothes");
-
-            }
-
+            actionText = "Clothes with such ID already exists in the database";
         }
+        MessageBoxShowDelegate(ActionText);
 
-        private string actionText;
-        public string ActionText
+    }
+
+    private ClothesModel currentClothes;
+    public ClothesModel CurrentClothes
+    {
+        get
         {
-            get
-            {
-                return this.actionText;
-            }
-            set
-            {
-                this.actionText = value;
-                OnPropertyChanged("ActionText");
-            }
+            return currentClothes;
+        }
+        set
+        {
+            currentClothes = value;
+            OnPropertyChanged("CurrentClothes");
+
         }
 
-        public ModelCommand DisplayPopUpCommand { get; private set; }
+    }
 
-        public Action<string> MessageBoxShowDelegate { get; set; } = x => throw new ArgumentOutOfRangeException($"The delegate {nameof(MessageBoxShowDelegate)} must be assigned by the view layer");
+    private ClothesModel newClothes;
+    public ClothesModel NewClothes
+    {
+        get
+        {
+            return newClothes;
+        }
+        set
+        {
+            newClothes = value;
+            OnPropertyChanged("NewClothes");
+
+        }
+
+    }
+
+    private string actionText;
+    public string ActionText
+    {
+        get
+        {
+            return actionText;
+        }
+        set
+        {
+            actionText = value;
+            OnPropertyChanged("ActionText");
+        }
+    }
+
+    public ModelCommand DisplayPopUpCommand { get; private set; }
+
+    public Action<string> MessageBoxShowDelegate { get; set; } = x => throw new ArgumentOutOfRangeException($"The delegate {nameof(MessageBoxShowDelegate)} must be assigned by the view layer");
     
 
 
-}
 }

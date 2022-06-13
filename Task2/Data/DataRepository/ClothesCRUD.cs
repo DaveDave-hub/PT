@@ -1,114 +1,79 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Data;
 using Data.API;
-using Data.Model;
 
-namespace Data.DataRepository
+namespace Data.DataRepository;
+
+public class ClothesCRUD : IClothesDataLayerAPI
 {
-    public class ClothesCRUD : IClothesDataLayerAPI
+    private DataClasses1DataContext context;
+
+    public ClothesCRUD(DataClasses1DataContext context = default)
     {
-        private DataClasses1DataContext context;
+        this.context = context ?? new DataClasses1DataContext();
+    }
 
-        public ClothesCRUD(DataClasses1DataContext context = default)
+    private IClothes Transform(Clothes clothes)
+    {
+        return new Model.Clothes(clothes.id, clothes.price, clothes.type);
+    }
+
+    public bool AddClothes(int clothes_id, int clothes_price, string clothes_type)
+    {
+        if (GetClothes(clothes_id) != null) return false;
+        var newClothes = new Clothes
         {
-            this.context = context ?? new DataClasses1DataContext();
+            id = clothes_id,
+            price = clothes_price,
+            type = clothes_type
+        };
+        context.Clothes.InsertOnSubmit(newClothes);
+        context.SubmitChanges();
+
+        return true;
+    }
+
+
+    public bool DeleteClothes(int clothes_id)
+    {
+        Clothes myClothes = context.Clothes.SingleOrDefault(clothes => clothes.id == clothes_id);
+        if (myClothes == null) return false;
+
+        context.Clothes.DeleteOnSubmit(myClothes);
+        context.SubmitChanges();
+        return true;
+    }
+
+
+    public bool Update(int clothes_id, int clothes_price, string clothes_type)
+    {
+        Clothes myclothes = context.Clothes.SingleOrDefault(clothes => clothes.id == clothes_id);
+        if (myclothes == null) return false;
+
+        myclothes.price = clothes_price;
+        myclothes.type = clothes_type;
+
+        context.SubmitChanges();
+
+        return true;
+    }
+        
+    public IClothes GetClothes(int clothes_id)
+    {
+        var clothesDatabase = (from clothes in context.Clothes where clothes.id == clothes_id select clothes).FirstOrDefault();
+        return clothesDatabase != null ? Transform(clothesDatabase) : null;
+    }
+        
+    public IEnumerable<IClothes> GetAllClothes()
+    {
+        List<Clothes> clothes = context.Clothes.ToList();
+        List<IClothes> result = new();
+
+        foreach (Clothes cloth in clothes)
+        {
+            result.Add(Transform(cloth));
         }
 
-        private IClothes Transform(Clothes clothes)
-        {
-            return new Clothes(clothes.id, clothes.price, clothes.type);
-        }
-
-        public bool addClothes(int clothes_id, decimal clothes_price, string clothes_type)
-        {
-            if (GetClothes(clothes_id) != null) return false;
-                {
-                    Clothes newClothes = new Clothes
-                    {
-                        id = clothes_id,
-                        price = clothes_price,
-                        type = clothes_type,
-
-                    };
-                    context.Clothes.InsertOnSubmit(newClothes);
-                    context.SubmitChanges();
-
-                    return true;
-                }
-        }
-
-
-         public bool deleteClothes(int clothes_id)
-        {
-            {
-                Clothes myClothes = context.Clothes.SingleOrDefault(clothes => clothes.id == clothes_id);
-                if (clothes == null) return false;
-
-                context.Clothes.DeleteOnSubmit(myClothes);
-                context.SubmitChanges();
-                return true;
-            }
-        }
-
-
-        public bool updatePrice(int clothes_id, decimal clothes_price)
-        {
-            {
-                Clothes myclothes = context.Clothes.SingleOrDefault(clothes => clothes.id == clothes_id);
-                if (clothes == null) return false;
-
-                myclothes.price = clothes_price;
-                context.SubmitChanges();
-                return true;
-            }
-        }
-
-        public bool updateType(int clothes_id, string clothes_type)
-        {
-            {
-                Clothes myclothes = context.Clothes.SingleOrDefault(clothes => clothes.id == clothes_id);
-                if (clothes == null) return false;
-
-                myclothes.type = clothes_type;
-                context.SubmitChanges();
-                return true;
-            }
-        }
-
-        public IClothes GetClothes(int clothes_id)
-        {
-            {
-                foreach (Clothes clothes in context.Clothes)
-                {
-                    if (clothes.id == clothes_id)
-                    {
-                        return Transform(clothes);
-                    }
-                }
-                return null;
-            }
-        }
-
-
-      
-
-   
-        public IEnumerable<IClothes> GetAllClothes()
-        {
-            List<Clothes> clothes = context.Clothes.ToList();
-            List<IClothes> result = new List<IClothes>();
-
-            foreach (Clothes clothes in clothes)
-            {
-                result.Add(Transform(clothes));
-            }
-        }
-
-     
+        return result;
     }
 }
-
-

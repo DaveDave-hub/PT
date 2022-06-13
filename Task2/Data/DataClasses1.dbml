@@ -2,21 +2,17 @@
   <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-188BQGV;Initial Catalog=SHOP;Integrated Security=True" SettingsObjectName="Data.Properties.Settings" SettingsPropertyName="SHOPConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Clients" Member="Clients">
     <Type Name="Clients">
-      <Column Name="name" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="name" Type="System.String" DbType="Text" CanBeNull="false" UpdateCheck="Never" />
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="Clients_Clients" Member="Clients2" ThisKey="id" OtherKey="id" Type="Clients" Cardinality="One" />
       <Association Name="Clients_Events" Member="Events" ThisKey="id" OtherKey="client_id" Type="Events" />
-      <Association Name="Clients_Clients" Member="Clients1" ThisKey="id" OtherKey="id" Type="Clients" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Events" Member="Events">
     <Type Name="Events">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="client_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="clothes_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="amount" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="is_buying" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime" CanBeNull="false" />
+      <Column Name="client_id" Type="System.Int32" DbType="Int" CanBeNull="false" />
+      <Column Name="clothes_id" Type="System.Int32" DbType="Int" CanBeNull="false" />
       <Association Name="Clients_Events" Member="Clients" ThisKey="client_id" OtherKey="id" Type="Clients" IsForeignKey="true" />
       <Association Name="Clothes_Events" Member="Clothes" ThisKey="clothes_id" OtherKey="id" Type="Clothes" IsForeignKey="true" />
     </Type>
@@ -24,8 +20,8 @@
   <Table Name="dbo.Clothes" Member="Clothes">
     <Type Name="Clothes">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
       <Column Name="type" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Member="price" Type="System.Int32" CanBeNull="false" />
       <Association Name="Clothes_Events" Member="Events" ThisKey="id" OtherKey="clothes_id" Type="Events" />
     </Type>
   </Table>

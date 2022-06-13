@@ -15,13 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Logic", "Logic", "{5EA79675
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServicesTest", "ServicesTest\ServicesTest.csproj", "{B68368AF-1577-4532-86FE-88A575F68BC4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".Presentation", ".Presentation", "{9044079F-A833-4ABB-B4EB-75853ED2781C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{9044079F-A833-4ABB-B4EB-75853ED2781C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{D163D479-6165-4584-988C-819C8BCEDE23}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel", "ViewModel\ViewModel.csproj", "{BA0A6C2E-7318-4076-A17E-8E8F432F0DDF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{DD239599-58FD-4C04-943F-6688A8BA18B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "View", "View\View.csproj", "{DD239599-58FD-4C04-943F-6688A8BA18B0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PresentationTest", "PresentationTest\PresentationTest.csproj", "{FD6B534E-7F72-4DE5-B9FD-09D3B3B31561}"
 EndProject

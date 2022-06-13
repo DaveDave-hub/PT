@@ -1,57 +1,49 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
 using Data;
+using Data.DataRepository;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+namespace DataTest;
 
-namespace DataTests
+[TestClass]
+public class UnitTest1
 {
-    [TestClass]
-    public class UnitTest1
+    private DataClasses1DataContext database;
+    private IClothesDataLayerAPI clothesDataLayerAPI;
+        
+    [TestInitialize]
+    public void TestInitialize()
     {
-        [TestMethod]
-        public void AddClothestoDatabase()
+        database = new DataClasses1DataContext();
+        clothesDataLayerAPI = new ClothesCRUD();
+            
+        database.ExecuteCommand("DELETE FROM Events");
+        database.ExecuteCommand("DELETE FROM Clients");
+        database.ExecuteCommand("DELETE FROM Clothes");
+            
+        clothesDataLayerAPI.AddClothes(0, 100, "Sweater");
+    }
+
+    [TestMethod]
+    public void AddClothesToDatabase()
+    {
+        Assert.IsNotNull(clothesDataLayerAPI.GetClothes(0));
+
+        Assert.AreEqual(100, clothesDataLayerAPI.GetClothes(0).Price);
+    }
+
+    [TestMethod]
+    [ExpectedException(typeof(System.Data.SqlClient.SqlException))]
+    public void ConnectingToNonExsistingDb()
+    {
+        using DataClasses1DataContext fake = new DataClasses1DataContext("Data Source = DESKTOP-H5C7HVQ; Initial Catalog = Fakeee; Integrated Security = True");
+        Clothes clothes = new Clothes
         {
-            using (DataClasses1DataContext database = new DataClasses1DataContext("Data Source = DESKTOP-188BQGV; Initial Catalog = SHOP; Integrated Security = True"))
-            {
+            id = 12345,
+            price = 1000,
+            type = "top"
+        };
 
-
-
-               Clothes pants = new Clothes();
-                pants.id = 41;
-                pants.price = 70;
-                pants.type = "cap";
-
-                database.Clothes.InsertOnSubmit(pants);
-                database.SubmitChanges();
-
-                Clothes mypants = database.Clothes.FirstOrDefault(panst => panst.id.Equals(41));
-
-                Assert.AreEqual(mypants.id, 41);
-                Assert.AreEqual(mypants.type, "cap");
-                Assert.AreEqual(mypants.price, 70);
-
-                database.Clothes.DeleteOnSubmit(pants);
-                database.SubmitChanges();
-            }
-        }
-
-
-        [TestMethod]
-        [ExpectedException(typeof(System.Data.SqlClient.SqlException))]
-        public void ConnectingToNonExsistingDB()
-        {
-            using (DataClasses1DataContext fake = new DataClasses1DataContext("Data Source = DESKTOP-H5C7HVQ; Initial Catalog = Fakeee; Integrated Security = True"))
-            {
-
-                Clothes clothes = new Clothes();
-                clothes.id = 12345;
-                clothes.price = 1000;
-                clothes.type = "top";
-
-                fake.Clothes.InsertOnSubmit(clothes);
-                fake.SubmitChanges();
-            }
-
-        }
+        fake.Clothes.InsertOnSubmit(clothes);
+        fake.SubmitChanges();
     }
 }

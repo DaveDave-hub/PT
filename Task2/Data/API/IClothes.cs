@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.API
-{
-    public interface IClothes
-    {
-        int Id { get; }
-        string Price { get; set; }
-        string Type { get; set; }
+namespace Data.API;
 
-        }
+public interface IClothes
+{
+    int Id { get; }
+    int Price { get; set; }
+    string Type { get; set; }
+
 }

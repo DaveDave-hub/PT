@@ -1,142 +1,105 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Presentation.Model;
-using Presentation.ViewModel.AdditionalInterfaces;
-using Services;
-using System.Linq;
-using System.Threading.Tasks;
+using Model;
+using Model.API;
+using ViewModel.MVVM;
 
-namespace Presentation.ViewModel
+namespace ViewModel;
+
+public class ClothesViewModel : BaseViewModel
 {
-    public class ClothesViewModel : BaseViewModel
+    private readonly IClientModel model;
+
+    public ClothesViewModel(IClientModel model = default)
     {
+        this.model = model ?? new ClientModel();
+            
+        AddClothesCommand = new ModelCommand(AddClothes);
+        EditClothesCommand = new ModelCommand(EditClothes);
+        DeleteClothesCommand = new ModelCommand(DeleteClothes);
+        RefreshClothesCommand = new ModelCommand(RefreshClothes);
+            
+        RefreshClothes();
+    }
 
-        public ClothesViewModel()
+    private void RefreshClothes()
+    {
+        //Task.Run(() => this.Clothes = GetClothesModelsConverter());
+        OnPropertyChanged("Clothes");
+    }
+
+    private IEnumerable<ClientModelData> clothes;
+    public IEnumerable<ClientModelData> Clothes
+    {
+        get
         {
-            this.RefreshClothes();
-            AddClothesCommand = new ModelCommand(AddClothes);
-            EditClothesCommand = new ModelCommand(EditClothes);
-            DeleteClothesCommand = new ModelCommand(DeleteClothes);
-            RefreshClothesCommand = new ModelCommand(RefreshClothes);
+            return clothes;
         }
 
-        private void RefreshClothes()
+        set
         {
-            Task.Run(() => this.Clothes = GetClothesModelsConverter());
-            this.OnPropertyChanged("Clothes");
+            clothes = value;
+            OnPropertyChanged("Clothes");
         }
+    }
 
-        private IEnumerable<ClothesModel> clothes;
-        public IEnumerable<ClothesModel> Clothes
+
+    private ClientModelData currentClothes;
+    public ClientModelData CurrentClothes
+    {
+        get => currentClothes;
+        set
         {
-            get
-            {
-                return this.clothes;
-            }
-
-            set
-            {
-                this.clothes = value;
-                this.OnPropertyChanged("Clothes");
-            }
-        }
-
-
-        private static ClothesModel currentClothes;
-        public ClothesModel CurrentClothes
-        {
-            get
-            {
-                return currentClothes;
-            }
-            set
-            {
-                currentClothes = value;
-                this.OnPropertyChanged("CurrentClothes");
-
-            }
+            currentClothes = value;
+            OnPropertyChanged("CurrentClothes");
 
         }
 
+    }
+        
+    public ModelCommand AddClothesCommand { get; private set; }
+    public ModelCommand DeleteClothesCommand { get; private set; }
 
 
-        public ModelCommand AddClothesCommand
-
-        {
-            get; private set;
-        }
-        public ModelCommand DeleteClothesCommand
-
-        {
-            get; private set;
-        }
+    public Lazy<IWindow> ChildWindow { get; set; }
+    public Lazy<IWindow> EditWindow { get; set; }
 
 
-        public Lazy<IWindow> ChildWindow { get; set; }
+    private void AddClothes()
+    {
+        IWindow _child = ChildWindow.Value; 
+        _child.Show();
 
-        public Lazy<IWindow> EditWindow { get; set; }
+    }
 
+    private void EditClothes()
+    {
+        IWindow newWindow = EditWindow.Value;
+        newWindow.Show();
+    }
 
-        private void AddClothes()
-        {
-
-
-            IWindow _child = ChildWindow.Value;
-            _child.Show();
-
-        }
-
-
-
-        private void EditClothes()
-        {
-
-            IWindow newWindow = EditWindow.Value;
-            newWindow.Show();
-
-        }
-
-        private void DeleteClothes()
-        {
-            ClothesCRUD.deleteClothes(CurrentClothes.id);
-            RefreshClothes();
-        }
+    private void DeleteClothes()
+    {
+        //IClothesLogic.deleteClothes(CurrentClothes.id);
+        RefreshClothes();
+    }
 
 
-        public ModelCommand RefreshClothesCommand
+    public ModelCommand RefreshClothesCommand
 
-        {
-            get; private set;
-        }
-
-
-        public ModelCommand EditClothesCommand
-
-        {
-            get; private set;
-        }
-
-        public static ClothesModel RetriveClothes()
-        {
-            return currentClothes;
-        }
-
-        public IEnumerable<ClothesModel> GetClothesModelsConverter()
-        {
-            List<Dictionary<string, string>> retrived = ClothesCRUD.GetAllClothesInfo();
-            List<ClothesModel> temp = new List<ClothesModel>();
-
-            foreach (Dictionary<string, string> dict in retrived)
-            {
-                ClothesModel t = new ClothesModel();
-                t.Converter(dict);
-                temp.Add(t);
-            }
-            return temp;
-        }
+    {
+        get; private set;
+    }
 
 
+    public ModelCommand EditClothesCommand
 
+    {
+        get; private set;
+    }
+
+    public ClothesModel RetriveClothes()
+    {
+        return new ClothesModel();
     }
 }

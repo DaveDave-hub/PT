@@ -5,19 +5,17 @@ using System.Text;
 using Data.API;
 using System.Threading.Tasks;
 
-namespace Data.DataRepository
+namespace Data.DataRepository;
+
+public interface IClothesDataLayerAPI
 {
-    public interface IClothesDataLayerAPI
-    {
-        bool addClothes(int clothes_id, decimal clothes_price, string clothes_type);
+    bool AddClothes(int clothes_id, int clothes_price, string clothes_type);
 
-        bool deleteClothes(int clothes_id);
+    bool DeleteClothes(int clothes_id);
 
-        bool updatePrice(int clothes_id, decimal clothes_price);
+    bool Update(int clothes_id, int clothes_price, string clothes_type);
+        
+    IClothes GetClothes(int clothes_id);
+    IEnumerable<IClothes> GetAllClothes();
 
-        bool updateType(int clothes_id, string clothes_type);
-        IClothes GetClothes(int clothes_id);
-        IEnumerable<IClothes> GetAllClothes();
-
-    }
 }

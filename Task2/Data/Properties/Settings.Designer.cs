@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Dataa.Properties {
+namespace Data.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -26,7 +26,7 @@ namespace Dataa.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-188BQGV;Initial Catalog=SHOP;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=LAPTOP-P3FAE66R\\MSSQLSERVER_DB;Initial Catalog=SHOP;Integrated Security=True")]
         public string SHOPConnectionString {
             get {
                 return ((string)(this["SHOPConnectionString"]));
